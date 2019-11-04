@@ -85,6 +85,7 @@ const mapDispatchToProps = dispatch => ({
 // firebase object with auth method.
 // You can find more information on the link below
 // http://docs.react-redux-firebase.com/history/v3.0.0/docs/auth.html
+
 export default compose(
   firebaseConnect(),
   connect(mapStateToProps, mapDispatchToProps),

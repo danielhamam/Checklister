@@ -38,3 +38,33 @@ div.banner {
 .home_new_list_button:hover {
   box-shadow: 1px 2px;
 }
+
+#description {
+  color: black;
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+#assigned_to, #due_date, #completed {
+  font-weight: bold;
+  font-size: 12pt;
+  color: black;
+}
+
+.header_container{
+}
+
+.list_item_task_header {
+  font-weight: bold;
+  font-size: 36pt;
+}
+
+.list_item_due_date_header {
+  font-weight: bold;
+  font-size: 36pt;
+}
+
+.list_item_status_header {
+  font-weight: bold;
+  font-size: 36pt;
+}

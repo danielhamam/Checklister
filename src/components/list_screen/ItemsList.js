@@ -11,6 +11,15 @@ class ItemsList extends React.Component {
         console.log("ItemsList: todoList.id " + todoList.id);
         return (
             <div className="todo-lists section">
+
+            <div className="header_container">
+                <div class="row"> </div>
+                    <span class="col s2" className="list_item_task_header" >Task </span>
+                    <span class="col s2"className="list_item_due_date_header" >Due Date</span>
+                    <span class="col s2"className="list_item_status_header"> Status </span>
+                <div class="row"> </div>
+            </div>
+
                 {items && items.map(function(item) {
                     item.id = item.key;
                     return (

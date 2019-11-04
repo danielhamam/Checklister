@@ -48,3 +48,38 @@ input[type=email]:not(.browser-default):focus:not([readonly]) + label,
 input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   color: #ec407a !important;
 }
+
+#description, #assigned_to {
+  display: block;
+}
+
+#due_date {
+  margin: 14%;
+}
+
+#completed {
+  margin: 9%;
+}
+
+.header_container{
+  background-color: lightgreen;
+}
+
+.list_item_task_header {
+  position: relative;
+  top: 10px;
+  left: 4%;
+}
+
+.list_item_due_date_header {
+  position: relative;
+  top: 10px;
+  left: 21%;
+}
+
+.list_item_status_header {
+  position: relative;
+  top: 10px;
+  left: 32%;
+}
+
