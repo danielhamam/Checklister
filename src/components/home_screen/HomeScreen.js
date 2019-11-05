@@ -14,15 +14,21 @@ class HomeScreen extends Component {
                     name: 'Unknown',
                     owner: 'Unknown',
                     items: [],
+                    key: 0
         })
+    }
+
+    updateList = () => {
+        const fireStore = getFirestore();
+        fireStore.collection('todoLists').orderBy('key', 'asc');
     }
 
     render() {
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
         }
-
         return (
+            
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m4">

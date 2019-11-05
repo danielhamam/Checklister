@@ -69,17 +69,46 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   position: relative;
   top: 10px;
   left: 4%;
+  cursor : pointer;
 }
 
 .list_item_due_date_header {
   position: relative;
   top: 10px;
   left: 21%;
+  cursor : pointer;
 }
 
 .list_item_status_header {
   position: relative;
   top: 10px;
   left: 32%;
+  cursor : pointer;
 }
 
+#list_trash {
+  float : right;
+  cursor : pointer;
+}
+
+#my_modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place front is invalid - may break your css so removed */  
+  z-index: 9999; /* to move in front of other elements. */
+}
+
+#yes,#no {
+  font-size: 16px;
+  height: 60px;
+  cursor: pointer;
+  margin: 1%;
+}
+
+.modal_content {
+
+}
+
+#last_line {
+  margin: 2%;
+  font-weight: bold;
+}

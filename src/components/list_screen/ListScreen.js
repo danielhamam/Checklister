@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
 import { firestoreConnect } from 'react-redux-firebase';
+import { getFirestore } from 'redux-firestore';
+
 
 class ListScreen extends Component {
     state = {
@@ -20,15 +22,28 @@ class ListScreen extends Component {
         }));
     }
 
+    toggleModal = () => {
+        let result = document.getElementById("my_modal");
+        if (result.style.display == "block") {
+            result.style.display = "none";
+        } else result.style.display = "block";
+    }
+
+    deleteList = (todoList) => {
+        const fireStore = getFirestore();
+        // fireStore.collection('todoLists').doc(todoList.id).delete();
+   }
+
     render() {
         const auth = this.props.auth;
         const todoList = this.props.todoList;
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
-
         return (
+
             <div className="container white">
+                <div class="modal-trigger" href="my_modal" id="list_trash" onClick={this.toggleModal}> &#128465; </div>
                 <h5 className="grey-text text-darken-3">Todo List</h5>
                 <div className="input-field">
                     <label htmlFor="email"></label>
@@ -38,7 +53,20 @@ class ListScreen extends Component {
                     <label htmlFor="password"></label>
                     <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} value={todoList.owner} />
                 </div>
+
+                <div id="my_modal" class="modal" >
+                    <div class="modal-content">
+                        <h4>Delete list?</h4>
+                        <br />
+                        <p> Are you sure you want to delete this list?</p>
+                    </div>
+                        <button id="yes" onClick={this.deleteList(todoList)} class="modal-close waves-effect waves-green btn-flat">Yes</button>
+                        <button id="no" onClick={this.toggleModal} class="modal-close waves-effect waves-green btn-flat">No</button>
+                        <div id="last_line"> This list will not be retrievable.</div>
+                </div>
+
                 <ItemsList todoList={todoList} />
+
             </div>
         );
     }

@@ -68,3 +68,28 @@ div.banner {
   font-weight: bold;
   font-size: 36pt;
 }
+
+#list_trash {
+  font-size: 35pt;
+}
+
+#my_modal {
+  opacity : 100%;
+  background-color: #E1E4CB;
+}
+
+.modal_content {
+  color: #000;
+  text-decoration: none;
+}
+
+#yes, #no {
+  background-color: lightgray;
+  border: none;
+  color: black;
+  border: 1px solid black;
+  color: black;
+}
+
+#completed {
+}

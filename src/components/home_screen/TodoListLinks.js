@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import TodoListCard from './TodoListCard';
+import { getFirestore } from 'redux-firestore';
 
 class TodoListLinks extends React.Component {
+
     render() {
         const todoLists = this.props.todoLists;
         console.log(todoLists);
