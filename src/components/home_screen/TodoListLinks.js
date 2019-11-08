@@ -22,11 +22,12 @@ class TodoListLinks extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+// Each component is deciding which things it wants from the store, and we're deciding it right here. 
+const mapStateToProps = (state) => { // Give me the following things from the database: 
     return {
-        todoLists: state.firestore.ordered.todoLists,
+        todoLists: state.firestore.ordered.todoLists, //.ordered something we can map through. 
         auth: state.firebase.auth,
     };
 };
 
-export default compose(connect(mapStateToProps))(TodoListLinks);
+export default compose(connect(mapStateToProps))(TodoListLinks); // makes todolist available as a prop.

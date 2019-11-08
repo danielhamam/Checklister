@@ -45,7 +45,7 @@ div.banner {
   font-size: 14pt;
 }
 
-#assigned_to, #due_date, #completed {
+#assigned_to, #due_date {
   font-weight: bold;
   font-size: 12pt;
   color: black;
@@ -92,4 +92,14 @@ div.banner {
 }
 
 #completed {
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+.style_red {
+  color : red;
+}
+
+.style_green {
+  color: green;
 }

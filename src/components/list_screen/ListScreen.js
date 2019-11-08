@@ -11,6 +11,7 @@ class ListScreen extends Component {
     state = {
         name: '',
         owner: '',
+        NavigateHome: false, 
     }
 
     handleChange = (e) => {
@@ -29,15 +30,20 @@ class ListScreen extends Component {
         } else result.style.display = "block";
     }
 
-    deleteList = (todoList) => {
+    deleteList = () => {
         const fireStore = getFirestore();
-        // fireStore.collection('todoLists').doc(todoList.id).delete();
+        fireStore.collection('todoLists').doc(this.props.todoList.id).delete();
+        this.toggleModal();
+        this.setState({ NavigateHome : true});
    }
 
     render() {
         const auth = this.props.auth;
         const todoList = this.props.todoList;
         if (!auth.uid) {
+            return <Redirect to="/" />;
+        }
+        if (this.state.NavigateHome == true) {
             return <Redirect to="/" />;
         }
         return (
@@ -60,7 +66,7 @@ class ListScreen extends Component {
                         <br />
                         <p> Are you sure you want to delete this list?</p>
                     </div>
-                        <button id="yes" onClick={this.deleteList(todoList)} class="modal-close waves-effect waves-green btn-flat">Yes</button>
+                        <button id="yes" onClick={this.deleteList} class="modal-close waves-effect waves-green btn-flat">Yes</button>
                         <button id="no" onClick={this.toggleModal} class="modal-close waves-effect waves-green btn-flat">No</button>
                         <div id="last_line"> This list will not be retrievable.</div>
                 </div>

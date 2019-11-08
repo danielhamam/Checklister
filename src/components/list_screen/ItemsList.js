@@ -6,11 +6,13 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 
 class ItemsList extends React.Component {
+    state = {
+        CurrentSortingCriteria: "",
+    }
 
     sortTask = () => {
-    // const fireStore = getFirestore();
-    // fireStore.collection('todoLists').orderBy("name", "desc"); // asc or desc
-    // .doc(this.props.todoList.name)
+       // this.props.todoList.items;
+       this.setState({ CurrentSortingCriteria : true});
     }
 
     sortDueDate = () => {

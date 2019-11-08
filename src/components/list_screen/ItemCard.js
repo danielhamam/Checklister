@@ -3,16 +3,18 @@ import React from 'react';
 class ItemCard extends React.Component {
 
     render() {
+    
         const { item } = this.props;  
-        
         let { completedValue } = "";
+        let { style_card } = "";
+        
         if (item.completed == true) {
             completedValue = "Completed";
-            // document.getElementById("completed").style.color = "green";
+            style_card = "style_green";
         }
         else {
             completedValue = "Pending";
-            // document.getElementById("completed").style.color = "red";
+            style_card = "style_red";
         }
 
         return (
@@ -23,13 +25,12 @@ class ItemCard extends React.Component {
                     <span class="col s12" id="description" >{item.description} </span>
                     <span class="col s3" id="assigned_to"> Assigned to: {item.assigned_to}</span>
                     <span id="due_date" >{item.due_date} </span>
-                    <span id="completed"> {completedValue} </span>      
+                    <span id="completed" class = {style_card}> {completedValue} </span>      
                  </div>
-
             </div>
-
             </div>
+            
         );
-    }
+                }
 }
 export default ItemCard;
