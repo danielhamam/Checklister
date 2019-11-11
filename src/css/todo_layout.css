@@ -92,9 +92,32 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 #my_modal {
-  display: none; /* Hidden by default */
+  visibility: hidden;
+  /* display: none; hidden by default */
   position: fixed; /* Stay in place front is invalid - may break your css so removed */  
   z-index: 9999; /* to move in front of other elements. */
+}
+
+@keyframes fadein {
+	from {
+    visibility : hidden;
+    opacity:0;
+	}
+	to {
+    visibility : visible;
+    opacity:1;
+  }
+}
+
+@keyframes fadeout {
+	from {
+    visibility : visible;
+    opacity:1;
+	}
+	to {
+    visibility : hidden;
+    opacity:0;
+  }
 }
 
 #yes,#no {
@@ -111,4 +134,8 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 #last_line {
   margin: 2%;
   font-weight: bold;
+}
+
+.fixed-action-btn {
+  float: right;
 }

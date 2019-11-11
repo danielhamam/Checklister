@@ -32,6 +32,7 @@ class DatabaseTester extends React.Component {
                     console.log(err);
                 });
         });
+        // fireStore.collection('todoLists').orderBy('key');
     }
 
     render() {

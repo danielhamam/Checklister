@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { NavLink, Redirect } from 'react-router-dom';
 import ItemCard from './ItemCard';
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
@@ -24,6 +25,9 @@ class ItemsList extends React.Component {
     }
 
     render() {
+        if (!this.props.auth.uid) {
+            return <Redirect to="/login" />;
+        }
         const todoList = this.props.todoList;
         const items = todoList.items;
         console.log("ItemsList: todoList.id " + todoList.id);

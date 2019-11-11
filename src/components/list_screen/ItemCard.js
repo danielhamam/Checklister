@@ -27,8 +27,22 @@ class ItemCard extends React.Component {
                     <span id="due_date" >{item.due_date} </span>
                     <span id="completed" class = {style_card}> {completedValue} </span>      
                  </div>
+                 
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large red">
+                    <i class="large material-icons">mode_edit</i>
+                </a>
+                <ul>
+                    <li><a class="btn-floating black"><i class="material-icons">arrow_upward</i></a></li>
+                    <li><a class="btn-floating black"><i class="material-icons">arrow_downward</i></a></li>
+                    <li><a class="btn-floating black"><i class="material-icons">close</i></a></li>
+                </ul>
+            </div>
+
+
             </div>
             </div>
+
             
         );
                 }

@@ -7,6 +7,9 @@ import TodoListLinks from './TodoListLinks';
 import { getFirestore } from 'redux-firestore';
 
 class HomeScreen extends Component {
+    state = {
+        isNewItem : false,
+    }
 
     handleNewList = () => {
         const fireStore = getFirestore();
@@ -16,14 +19,17 @@ class HomeScreen extends Component {
                     items: [],
                     key: 0
         })
-    }
-
-    updateList = () => {
-        const fireStore = getFirestore();
-        fireStore.collection('todoLists').orderBy('key', 'asc');
+        //db.collection('chatroom').doc(name).get(id);
+        //this.setState({isNewItem : true});
     }
 
     render() {
+
+        if (this.state.isNewItem) {
+            //let answer = '/todoList/' + todoList.id;
+           // return <Redirect to={answer} />;
+        }
+
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
         }
@@ -35,7 +41,7 @@ class HomeScreen extends Component {
                         <TodoListLinks />
                     </div>
 
-                    <div className="col s8">
+                    <div className="col s8" >
                         <div className="banner">
                             @todo<br />
                             List Maker

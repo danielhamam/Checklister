@@ -12,6 +12,7 @@ class ListScreen extends Component {
         name: '',
         owner: '',
         NavigateHome: false, 
+        rerender : false,
     }
 
     handleChange = (e) => {
@@ -26,8 +27,20 @@ class ListScreen extends Component {
     toggleModal = () => {
         let result = document.getElementById("my_modal");
         if (result.style.display == "block") {
-            result.style.display = "none";
-        } else result.style.display = "block";
+            document.getElementById("my_modal").style.animation = "fadeout .6s";
+            result.style.visibility = "hidden";
+        } else {
+            result.style.visibility = "visible";
+            document.getElementById("my_modal").style.animation = "fadein .6s";
+            result.style.display = "block";
+        }
+    }
+
+    onModal = () => {
+        let result = document.getElementById("my_modal");
+        result.style.visibility = "visible";
+        document.getElementById("my_modal").style.animation = "fadein .6s";
+        result.style.display = "block";
     }
 
     deleteList = () => {
@@ -49,7 +62,7 @@ class ListScreen extends Component {
         return (
 
             <div className="container white">
-                <div class="modal-trigger" href="my_modal" id="list_trash" onClick={this.toggleModal}> &#128465; </div>
+                <div class="modal-trigger" href="my_modal" id="list_trash" onClick={this.onModal}> &#128465; </div>
                 <h5 className="grey-text text-darken-3">Todo List</h5>
                 <div className="input-field">
                     <label htmlFor="email"></label>
@@ -60,14 +73,14 @@ class ListScreen extends Component {
                     <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} value={todoList.owner} />
                 </div>
 
-                <div id="my_modal" class="modal" >
-                    <div class="modal-content">
+                <div id="my_modal" class="modal">
+                    <div class="modal-content ">
                         <h4>Delete list?</h4>
                         <br />
                         <p> Are you sure you want to delete this list?</p>
                     </div>
-                        <button id="yes" onClick={this.deleteList} class="modal-close waves-effect waves-green btn-flat">Yes</button>
-                        <button id="no" onClick={this.toggleModal} class="modal-close waves-effect waves-green btn-flat">No</button>
+                        <button id="yes" onClick={this.deleteList} class="modal-close waves-effect waves-white btn-flat">Yes</button>
+                        <button id="no" onClick={this.toggleModal} class="modal-close waves-effect waves-white btn-flat">No</button>
                         <div id="last_line"> This list will not be retrievable.</div>
                 </div>
 
