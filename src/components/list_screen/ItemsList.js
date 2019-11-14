@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Link } from 'react-router-dom';
 import { NavLink, Redirect } from 'react-router-dom';
 import ItemCard from './ItemCard';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -12,8 +13,7 @@ class ItemsList extends React.Component {
     }
 
     sortTask = () => {
-       // this.props.todoList.items;
-       this.setState({ CurrentSortingCriteria : true});
+    //    this.setState({ CurrentSortingCriteria : "SORT_BY_TASK_INCREASING"});
     }
 
     sortDueDate = () => {
@@ -39,13 +39,24 @@ class ItemsList extends React.Component {
                     <span className="list_item_due_date_header" onClick= {this.sortDueDate}>Due Date</span>
                     <span className="list_item_status_header" onClick= {this.sortStatus}> Status </span>
             </div>
-
+{/* 
                 {items && items.map(function(item) {
                     item.id = item.key;
                     return (
-                        <ItemCard todoList={todoList} item={item} />
+                        <Link to={'/todoList/' + todoList.id + '/' + item.id} key={item.id}>
+                            <ItemCard todoList={todoList} item={item} />
+                        </Link>
                     );})
-                }
+                } */}
+                              
+                {items && items.map(item => (
+                        <Link to={'/todoList/' + todoList.id + '/' + item.key} key={item.key} item={item}>
+                            <ItemCard todoList={todoList} item={item} />
+                        </Link>
+                )
+                    )
+                } 
+
             </div>
         );
     }

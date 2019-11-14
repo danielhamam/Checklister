@@ -103,3 +103,59 @@ div.banner {
 .style_green {
   color: green;
 }
+
+/* ITEM SCREEN CONTROLS */
+#item_heading {}
+#item_form_container {}
+#item_description_prompt {}
+#item_description_textfield {
+  border: solid;
+  border-width: 1px;
+}
+#item_assigned_to_prompt {}
+#item_assigned_to_textfield {
+  border: solid;
+  border-width: 1px;
+}
+#item_due_date_prompt {}
+#item_due_date_picker {
+  background : white;
+  border: solid;
+  border-width: 1px;
+}
+#item_completed_prompt {}
+#item_completed_checkbox {
+}
+#item_form_submit_button {}
+#item_form_cancel_button {}
+
+/* ITEM SCREEN CLASSES */
+.item_prompt {
+  font-weight: bold;
+  font-size:14pt;
+}
+.item_input {
+font-size: 16pt;
+}
+.item_button {
+font-size: 16pt;
+}
+
+.fixed-action-btn{
+  position: relative;
+}
+
+.container {
+  background:  #E6E6E6;
+}
+
+#your_lists {
+  font-family: 'Lexend Exa';
+  position: relative;
+  top: 10px;
+  left: 60px;
+  font-size: 24pt;
+  color: gray;
+  font-weight: bold;
+
+}

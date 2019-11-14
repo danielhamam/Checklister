@@ -22,6 +22,7 @@ class DatabaseTester extends React.Component {
         const fireStore = getFirestore();
         todoJson.todoLists.forEach(todoListJson => {
             fireStore.collection('todoLists').add({
+                    created_time: new Date(),
                     key: todoListJson.key,
                     name: todoListJson.name,
                     owner: todoListJson.owner,

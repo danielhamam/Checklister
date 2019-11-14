@@ -14,13 +14,13 @@ class HomeScreen extends Component {
     handleNewList = () => {
         const fireStore = getFirestore();
             fireStore.collection('todoLists').add({
-                    name: 'Unknown',
-                    owner: 'Unknown',
-                    items: [],
-                    key: 0
+                created_time: new Date(),
+                key: 0,
+                name: 'Unknown',
+                owner: 'Unknown',
+                items: [],
         })
-        //db.collection('chatroom').doc(name).get(id);
-        //this.setState({isNewItem : true});
+        fireStore.collection('todoLists').orderBy("created_time", "desc");
     }
 
     render() {
@@ -37,6 +37,7 @@ class HomeScreen extends Component {
             
             <div className="dashboard container">
                 <div className="row">
+                    <div id="your_lists">Your Lists</div> 
                     <div className="col s12 m4">
                         <TodoListLinks />
                     </div>
