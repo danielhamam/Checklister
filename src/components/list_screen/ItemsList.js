@@ -24,6 +24,23 @@ class ItemsList extends React.Component {
 
     }
 
+    addItem = () => {
+        const fireStore = getFirestore();
+        let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
+        let new_key = this.props.todoList.items.length;
+
+        reference.update({
+            'items': fireStore.FieldValue.arrayUnion({
+                assigned_to: "Unknown",
+                completed: false,
+                description: "Unknown",
+                due_date: "0000-00-00",
+                key: new_key,
+            })
+        });
+    
+       }
+
     render() {
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
@@ -39,15 +56,6 @@ class ItemsList extends React.Component {
                     <span className="list_item_due_date_header" onClick= {this.sortDueDate}>Due Date</span>
                     <span className="list_item_status_header" onClick= {this.sortStatus}> Status </span>
             </div>
-{/* 
-                {items && items.map(function(item) {
-                    item.id = item.key;
-                    return (
-                        <Link to={'/todoList/' + todoList.id + '/' + item.id} key={item.id}>
-                            <ItemCard todoList={todoList} item={item} />
-                        </Link>
-                    );})
-                } */}
                               
                 {items && items.map(item => (
                         <Link to={'/todoList/' + todoList.id + '/' + item.key} key={item.key} item={item}>
@@ -56,7 +64,9 @@ class ItemsList extends React.Component {
                 )
                     )
                 } 
-
+                    <div id="add_item" > 
+                        <i class="material-icons large" onClick={this.addItem}> add_circle_outline</i>
+                    </div>
             </div>
         );
     }

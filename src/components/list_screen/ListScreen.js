@@ -50,6 +50,23 @@ class ListScreen extends Component {
         this.setState({ NavigateHome : true});
    }
 
+   deleteItem = () => {
+    const fireStore = getFirestore();
+    let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
+
+    // DELETE ITEM:
+    // reference.update({
+    //     'items': fireStore.FieldValue.arrayRemove({
+    //         assigned_to: this.state.assigned_to,
+    //         completed: this.state.completed,
+    //         description: this.state.description,
+    //         due_date: this.state.due_date,
+    //         key: this.state.key,
+    //     })
+    // });
+
+   }
+
     render() {
         const auth = this.props.auth;
         const todoList = this.props.todoList;

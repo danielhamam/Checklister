@@ -9,25 +9,27 @@ import { getFirestore } from 'redux-firestore';
 class HomeScreen extends Component {
     state = {
         isNewItem : false,
+        reference : 101010,
     }
 
     handleNewList = () => {
         const fireStore = getFirestore();
-            fireStore.collection('todoLists').add({
+        fireStore.collection('todoLists').add({
                 created_time: new Date(),
                 key: 0,
                 name: 'Unknown',
                 owner: 'Unknown',
                 items: [],
-        })
-        fireStore.collection('todoLists').orderBy("created_time", "desc");
+        }).then(function (docRef) {
+            this.setState({reference : docRef.id})
+        });
+        this.setState({isNewItem : true})
     }
 
     render() {
 
         if (this.state.isNewItem) {
-            //let answer = '/todoList/' + todoList.id;
-           // return <Redirect to={answer} />;
+           return <Redirect to={'/todoList/' + this.state.reference} />;
         }
 
         if (!this.props.auth.uid) {

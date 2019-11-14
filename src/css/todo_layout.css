@@ -138,6 +138,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 
 .fixed-action-btn {
   float: right;
+  position: relative;
 }
 
 /* ITEM SCREEN CONTROLS */
@@ -162,6 +163,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   opacity : 1;
   position : relative;
   right: 310px;
+  cursor: pointer;
 }
 #item_form_submit_button {}
 #item_form_cancel_button {}
@@ -177,4 +179,10 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 .container {
+}
+
+#add_item {
+  position : relative;
+  text-align: center;
+  cursor: pointer;
 }
