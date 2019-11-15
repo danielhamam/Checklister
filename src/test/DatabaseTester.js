@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux';
 import todoJson from './TestTodoListData.json'
 import { getFirestore } from 'redux-firestore';
+import {Button, Icon} from 'react-materialize';
 
 class DatabaseTester extends React.Component {
 
     // NOTE, BY KEEPING THE DATABASE PUBLIC YOU CAN
     // DO THIS ANY TIME YOU LIKE WITHOUT HAVING
     // TO LOG IN
+    
     handleClear = () => {
         const fireStore = getFirestore();
         fireStore.collection('todoLists').get().then(function(querySnapshot){
@@ -37,10 +39,13 @@ class DatabaseTester extends React.Component {
     }
 
     render() {
+
         return (
             <div>
+                
                 <button onClick={this.handleClear}>Clear Database</button>
                 <button onClick={this.handleReset}>Reset Database</button>
+
             </div>)
     }
 }

@@ -76,6 +76,7 @@ div.banner {
 #my_modal {
   opacity : 100%;
   background-color: #E1E4CB;
+  text-align: center;
 }
 
 .modal_content {
@@ -124,8 +125,7 @@ div.banner {
   border-width: 1px;
 }
 #item_completed_prompt {}
-#item_completed_checkbox {
-}
+#item_completed_checkbox {}
 #item_form_submit_button {}
 #item_form_cancel_button {}
 

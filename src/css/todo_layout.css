@@ -96,6 +96,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   /* display: none; hidden by default */
   position: fixed; /* Stay in place front is invalid - may break your css so removed */  
   z-index: 9999; /* to move in front of other elements. */
+  width: 300px;
 }
 
 @keyframes fadein {
@@ -128,7 +129,6 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 .modal_content {
-
 }
 
 #last_line {
@@ -162,7 +162,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 #item_completed_checkbox {
   opacity : 1;
   position : relative;
-  right: 310px;
+  top: 10px;
   cursor: pointer;
 }
 #item_form_submit_button {}
@@ -185,4 +185,15 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   position : relative;
   text-align: center;
   cursor: pointer;
+}
+
+#floating_button {
+  position: absolute;
+  float: right;
+  right: 0px;
+  cursor: pointer;
+}
+
+#arrow_upward {
+  font-size: 25pt;
 }

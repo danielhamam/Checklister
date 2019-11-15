@@ -49,26 +49,40 @@ class ItemScreen extends Component {
         const fireStore = getFirestore();
         let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
         
+        let answer = this.state.key;
+        // Set the fields of the reference
+        reference.update({
+        items: {
+            answer: {
+            assigned_to: this.state.new_assigned_to,
+            completed: this.state.new_completed,
+            description: this.state.new_description,
+            due_date: this.state.new_due_date,
+            // key: this.state.key,
+            },
+        }
+        })
+
         // Delete from firestore:
-        reference.update({
-            'items': fireStore.FieldValue.arrayRemove({
-                assigned_to: this.state.old_assigned_to,
-                completed: this.state.old_completed,
-                description: this.state.old_description,
-                due_date: this.state.old_due_date,
-                key: this.state.key,
-            })
-        });
-        // Add to firestore (new)
-        reference.update({
-            'items': fireStore.FieldValue.arrayUnion({
-                assigned_to: this.state.new_assigned_to,
-                completed: this.state.new_completed,
-                description: this.state.new_description,
-                due_date: this.state.new_due_date,
-                key: this.state.key,
-            })
-        });
+        // reference.update({
+        //     'items': fireStore.FieldValue.arrayRemove({
+        //         assigned_to: this.state.old_assigned_to,
+        //         completed: this.state.old_completed,
+        //         description: this.state.old_description,
+        //         due_date: this.state.old_due_date,
+        //         key: this.state.key,
+        //     })
+        // });
+        // // Add to firestore (new)
+        // reference.update({
+        //     'items': fireStore.FieldValue.arrayUnion({
+        //         assigned_to: this.state.new_assigned_to,
+        //         completed: this.state.new_completed,
+        //         description: this.state.new_description,
+        //         due_date: this.state.new_due_date,
+        //         key: this.state.key,
+        //     })
+        // });
         
         this.setState({goList : true});
     }
@@ -97,7 +111,7 @@ class ItemScreen extends Component {
             <input id="item_due_date_picker" onChange = {this.handleDueDateChange} defaultValue = {this.state.old_due_date} class="item_input" type="date" />
 
             <div id="item_completed_prompt" class="item_prompt">Completed:</div>
-            <input id="item_completed_checkbox" onChange= {this.handleCompletedChange} defaultChecked= {this.state.old_completed} class="item_input" type="checkbox" />
+            <label> <input id="item_completed_checkbox" className="form_checkbox" type="checkbox" onChange= {this.handleCompletedChange} defaultChecked= {this.state.new_completed} /> </label>
         </div>
 
         <br />
