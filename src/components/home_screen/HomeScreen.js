@@ -9,25 +9,41 @@ import { getFirestore } from 'redux-firestore';
 class HomeScreen extends Component {
     state = {
         isNewItem : false,
-        reference : 101010,
+        todoList_id : 101010,
     }
 
-    handleNewList = () => {
+    handleNewList = (e) => {
+        let answer = Math.floor(Math.random() * 1000) + 100;
         const fireStore = getFirestore();
-        let example = fireStore.collection('todoLists').add({
-                created_time: new Date(),
-                key: 0,
-                name: 'Unknown',
-                owner: 'Unknown',
-                items: [],
+        let reference = fireStore.collection('todoLists');
+
+        // new item
+        const new_item = {
+            created_time: new Date(),
+            key: answer, // key is just used to distinguish, doesn't really matter. We sort with index.
+            name: 'Unknown',
+            owner: 'Unknown',
+            items: [],
+        };
+        // let value = e.target.value;
+        // let being_replaced = this.props.todoLists[0]; // At index 0, remove 1 element.
+        // this.props.todoLists.splice(0, 0, new_item); // Put new element at index 0
+        // this.props.todoLists.splice(1, 0, being_replaced); // Put old element at index 1
+        this.props.todoLists.push(new_item);
+
+        reference.add({
+            created_time: new Date(),
+            key: answer, // key is just used to distinguish, doesn't really matter. We sort with index.
+            name: 'Unknown',
+            owner: 'Unknown',
+            items: [],
         });
-        
-        let result1 = example;
 
-        result1.then(function(data){
-            this.setState({reference: data});
-        })
+        reference.orderBy('created_time', 'desc');
+        let index = this.props.todoLists.map(function (todoList) {return todoList.key;}).indexOf(answer);
+        let todoList = this.props.todoLists[index].id;
 
+        this.setState({todoList_id: todoList});
         this.setState({isNewItem : true});
         
     }
@@ -35,7 +51,7 @@ class HomeScreen extends Component {
     render() {
 
         if (this.state.isNewItem) {
-           return <Redirect to={'/todoList/' + this.state.reference} />;
+           return <Redirect to={'/todoList/' + this.state.todoList_id} />;
         }
 
         if (!this.props.auth.uid) {
@@ -70,6 +86,7 @@ class HomeScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        todoLists: state.firestore.ordered.todoLists, //.ordered something we can map through. 
         auth: state.firebase.auth
     };
 };

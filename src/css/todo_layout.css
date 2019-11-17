@@ -58,7 +58,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 #completed {
-  margin: 9%;
+  margin: 2.5%;
 }
 
 .header_container{
@@ -189,8 +189,8 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 
 #floating_button {
   position: absolute;
-  float: right;
-  right: 0px;
+  float: right; 
+  right: 10px;
   cursor: pointer;
 }
 

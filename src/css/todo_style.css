@@ -55,18 +55,22 @@ div.banner {
 }
 
 .list_item_task_header {
+  position: relative;
   font-weight: bold;
   font-size: 36pt;
+  left: 5%;
 }
 
 .list_item_due_date_header {
   font-weight: bold;
-  font-size: 36pt;
+  font-size: 33pt;
+  padding-right: 3%;
 }
 
 .list_item_status_header {
   font-weight: bold;
-  font-size: 36pt;
+  font-size: 33pt;
+  left: 195px;
 }
 
 #list_trash {
@@ -137,9 +141,6 @@ div.banner {
 .item_input {
 font-size: 16pt;
 }
-.item_button {
-font-size: 16pt;
-}
 
 .container {
   background:  #E6E6E6;
@@ -155,3 +156,28 @@ font-size: 16pt;
   font-weight: bold;
 
 }
+
+#item_button1 {
+  display: inline-block;
+  left:40px;
+  width: 35px;
+  height: 35px;
+  /* font-size: 10pt; */
+}
+
+#item_button2 {
+  display: inline-block;
+  left: 30px;
+  width: 35px;
+  height: 35px;
+  /* font-size: 10pt; */
+}
+
+#item_button3 {
+  display: inline-block;
+  left: 20px;
+  width: 35px;
+  height: 35px;
+  /* font-size: 10pt; */
+}
+

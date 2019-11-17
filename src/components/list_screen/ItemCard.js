@@ -51,10 +51,6 @@ processMoveUp = (e) => {
 
     const fireStore = getFirestore();
     fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
-
-
-    // this.setState({goList : true}); // re render
-
 }
 
 processMoveDown = (e) => {
@@ -94,7 +90,6 @@ processMoveDown = (e) => {
     const fireStore = getFirestore();
     fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
 
-
 }
 
 processDelete = (e) => {
@@ -133,19 +128,8 @@ processDelete = (e) => {
         return (
 
             <div class="white card todo-list-link pink-lighten-3">
-            <div class="row">
 
-            <Button id="floating_button" floating fab={{direction: 'right'}} className="green" large >
-                <Button floating className="red" >
-                    <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
-                </Button>
-                <Button floating className="purple">
-                    <Icon fontSize="large" onClick={this.processMoveDown}>arrow_downward</Icon>
-                </Button>
-                <Button floating className="blue">
-                    <Icon fontSize="large" onClick={this.processMoveUp}>arrow_upward</Icon>
-                </Button>
-            </Button>
+            <div class="row">
 
                 <div className="card-content grey-text text-darken-3">
                     <span class="col s12" id="description" >{item.description} </span>
@@ -155,6 +139,18 @@ processDelete = (e) => {
                 </div>
                  
             </div>
+
+            <Button id="floating_button" floating fab={{direction: 'left'}} className="green" large >
+                <Button floating className="red" id="item_button1">
+                    <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
+                </Button>
+                <Button floating className="purple" id="item_button2">
+                    <Icon fontSize="large" onClick={this.processMoveDown}>arrow_downward</Icon>
+                </Button>
+                <Button floating className="blue" id="item_button3">
+                    <Icon fontSize="large" onClick={this.processMoveUp}>arrow_upward</Icon>
+                </Button>
+            </Button>
             </div>
 
             
