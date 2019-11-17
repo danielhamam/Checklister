@@ -140,13 +140,13 @@ processDelete = (e) => {
             <div class="row">
 
             <Button id="floating_button" floating fab={{direction: 'right'}} className="green" large >
-                <Button floating className="green" >
+                <Button floating className="red" >
                     <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
                 </Button>
-                <Button floating className="red">
+                <Button floating className="purple">
                     <Icon fontSize="large" onClick={this.processMoveDown}>arrow_downward</Icon>
                 </Button>
-                <Button floating className="red">
+                <Button floating className="blue">
                     <Icon fontSize="large" onClick={this.processMoveUp}>arrow_upward</Icon>
                 </Button>
             </Button>

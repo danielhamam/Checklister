@@ -87,7 +87,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 #list_trash {
-  float : right;
+  float: right;
   cursor : pointer;
 }
 
@@ -196,4 +196,14 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 
 #arrow_upward {
   font-size: 25pt;
+}
+
+.test_class {
+  position:relative;
+  font-size:1pt;
+  opacity: 0;
+}
+
+#todolist_header {
+  font-size: 48pt;
 }

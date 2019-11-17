@@ -9,19 +9,28 @@ import { getFirestore } from 'redux-firestore';
 
 class ListScreen extends Component {
     state = {
-        name: '',
-        owner: '',
+        name: this.props.todoList.name,
+        owner: this.props.todoList.owner,
         NavigateHome: false, 
         rerender : false,
     }
 
-    handleChange = (e) => {
-        const { target } = e;
+    handleNameChange = (event) => {
 
-        this.setState(state => ({
-            ...state,
-            [target.id]: target.value,
-        }));
+        getFirestore().collection('todoLists').doc(this.props.todoList.id).update({
+            name: event.target.value,
+         });
+
+        this.setState({ name: event.target.value});
+
+    }
+    handleOwnerChange = (event) => {
+
+        getFirestore().collection('todoLists').doc(this.props.todoList.id).update({
+            owner: event.target.value,
+         });
+
+        this.setState({ owner: event.target.value});
     }
 
     toggleModal = () => {
@@ -36,7 +45,8 @@ class ListScreen extends Component {
         }
     }
 
-    onModal = () => {
+    onModal = (e) => {
+
         let result = document.getElementById("my_modal");
         result.style.visibility = "visible";
         document.getElementById("my_modal").style.animation = "fadein .6s";
@@ -44,27 +54,11 @@ class ListScreen extends Component {
     }
 
     deleteList = () => {
+
         const fireStore = getFirestore();
         fireStore.collection('todoLists').doc(this.props.todoList.id).delete();
         this.toggleModal();
         this.setState({ NavigateHome : true});
-   }
-
-   deleteItem = () => {
-    const fireStore = getFirestore();
-    let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
-
-    // DELETE ITEM:
-    // reference.update({
-    //     'items': fireStore.FieldValue.arrayRemove({
-    //         assigned_to: this.state.assigned_to,
-    //         completed: this.state.completed,
-    //         description: this.state.description,
-    //         due_date: this.state.due_date,
-    //         key: this.state.key,
-    //     })
-    // });
-
    }
 
     render() {
@@ -80,14 +74,15 @@ class ListScreen extends Component {
 
             <div className="container white">
                 <div class="modal-trigger" href="my_modal" id="list_trash" onClick={this.onModal}> &#128465; </div>
-                <h5 className="grey-text text-darken-3">Todo List</h5>
+                <h5 className="grey-text text-darken-3" id="todolist_header">Todo List</h5>
+                <div class="test_class">    Test-Class  </div>
                 <div className="input-field">
-                    <label htmlFor="email"></label>
-                    <input className="active" type="text" name="name" id="name" onChange={this.handleChange} defaultValue={todoList.name} />
+                    <label className="active" htmlFor="email">Name:</label>
+                    <input className="active" type="text" name="name" id="name" onChange={this.handleNameChange} defaultValue={this.props.todoList.name} />
                 </div>
                 <div className="input-field">
-                    <label htmlFor="password"></label>
-                    <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} defaultValue={todoList.owner} />
+                    <label className="active" htmlFor="password">Owner:</label>
+                    <input className="active" type="text" name="owner" id="owner" onChange={this.handleOwnerChange} defaultValue={this.props.todoList.owner} />
                 </div>
 
                 <div id="my_modal" class="modal">
