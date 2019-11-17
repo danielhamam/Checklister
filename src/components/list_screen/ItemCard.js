@@ -85,8 +85,8 @@ processMoveDown = (e) => {
 
     // Swap 
 
-    this.props.todoList.items.splice(first_index, 1);
     this.props.todoList.items.splice(second_index, 1);
+    this.props.todoList.items.splice(first_index, 1);
 
     this.props.todoList.items.splice(first_index, 0, second_item);
     this.props.todoList.items.splice(second_index, 0, first_item);
