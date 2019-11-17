@@ -75,17 +75,12 @@ class ItemScreen extends Component {
         let due_date = this.state.old_due_date;
 
         if (this.props.todoList.items[this.props.match.params.key].isOldItem == false && description == "Unknown" && assigned_to == "Unknown" && completed == false && due_date == "0000-00-00") {
-            // Remove from backend
-            reference.update({
-                'items': fireStore.FieldValue.arrayRemove({
-                    isOldItem : false,
-                    assigned_to: assigned_to,
-                    completed: completed,
-                    description: description,
-                    due_date: due_date,
-                    key: this.props.todoList.items.length - 1,
-                })
-            });
+
+            let index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(this.props.todoList.items[this.props.match.params.key].key);
+
+            this.props.todoList.items.splice(index, 1);
+            fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
+
             // Remove from frontend
             this.props.todoList.items.pop();
         } 
@@ -94,39 +89,23 @@ class ItemScreen extends Component {
 
     processSubmitChanges = () => {
 
-        const fireStore = getFirestore();
-        let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
+       const fireStore = getFirestore();
+       let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
 
-      // Delete from firestore:
-        reference.update({
-            'items': fireStore.FieldValue.arrayRemove({
-                isOldItem: false,
-                assigned_to: this.state.old_assigned_to,
-                completed: this.state.old_completed,
-                description: this.state.old_description,
-                due_date: this.state.old_due_date,
-                key: this.state.key,
-            })
-        });
-        // Add to firestore (new)
-        reference.update({
-            'items': fireStore.FieldValue.arrayUnion({
-                assigned_to: this.state.new_assigned_to,
-                completed: this.state.new_completed,
-                description: this.state.new_description,
-                due_date: this.state.new_due_date,
-                key: this.state.key,
-            })
-        });
+       let index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(this.props.todoList.items[this.props.match.params.key].key);
 
-        // Update Front-end:
+      this.props.todoList.items.splice(index, 1);
+      fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
 
-        // this.props.todoList.items[this.props.match.params.key].assigned_to = this.state.new_assigned_to;
-        // this.props.todoList.items[this.props.match.params.key].new_completed = this.state.new_completed;
-        // this.props.todoList.items[this.props.match.params.key].description = this.state.new_description;
-        // this.props.todoList.items[this.props.match.params.key].due_date = this.state.new_due_date;
-        
-        // this.props.todoList.items[this.props.todoList.items.length] = this.props.todoList.items[this.state.key];
+        const new_item = {
+            assigned_to: this.state.new_assigned_to,
+            completed: this.state.new_completed,
+            description: this.state.new_description,
+            due_date: this.state.new_due_date,
+            key: this.state.key,
+        };
+        this.props.todoList.items.splice(index, 0, new_item);
+        fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
 
         this.setState({goList : true});
     }

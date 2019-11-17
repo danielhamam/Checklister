@@ -11,6 +11,7 @@ class ItemsList extends React.Component {
     state = {
         CurrentSortingCriteria: "",
         goItemScreen: false,
+        keytoUse: 10100,
     }
 
     ItemSortCriteria = {
@@ -133,6 +134,8 @@ class ItemsList extends React.Component {
 
         const fireStore = getFirestore();
         let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
+        let answer = Math.floor(Math.random() * 1000) + 100;
+        this.setState({keytoUse : answer});
 
         reference.update({
             'items': fireStore.FieldValue.arrayUnion({
@@ -141,7 +144,8 @@ class ItemsList extends React.Component {
                 completed: false,
                 description: "Unknown",
                 due_date: "0000-00-00",
-                key: this.props.todoList.items.length,
+                key: answer,
+                // key: this.props.todoList.items.length,
             })
         });
 
@@ -152,15 +156,13 @@ class ItemsList extends React.Component {
             completed: false,
             description: "Unknown",
             due_date: "0000-00-00",
-            key: this.props.todoList.items.length,
+            key: answer,
         };
         this.props.todoList.items.push(new_item);
 
         // Make it navigate to edit screen of this new item. 
 
         this.setState({goItemScreen : true});
-
-        // this.props.history.push() 
     
        }
 
@@ -169,7 +171,7 @@ class ItemsList extends React.Component {
             return <Redirect to="/login" />;
         }
         if (this.state.goItemScreen) {
-            return <Redirect to={'/todoList/' + this.props.todoList.id + '/' + this.props.todoList.items[this.props.todoList.items.length - 1].key} />;
+            return <Redirect to={'/todoList/' + this.props.todoList.id + '/' + this.props.todoList.items.map(function (item) {return item.key;}).indexOf(this.state.keytoUse)} />;
         }
         const todoList = this.props.todoList;
         const items = todoList.items;
