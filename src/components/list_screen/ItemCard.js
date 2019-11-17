@@ -12,87 +12,88 @@ class ItemCard extends React.Component {
     }
 
 processMoveUp = (e) => {
-
+    // "description": "Give You Up",
+    // "due_date": "2019-09-30",
+    // "assigned_to": "Rick",
+    // "completed": true,
+    //  "key": 0
     e.preventDefault();
+    let original_key = this.props.item.key;
+
+    let first_index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(original_key);
+    let second_index = first_index - 1; // Above
+
+    // First item:
+    let first_item = {
+        description: this.props.todoList.items[first_index].description,
+        due_date: this.props.todoList.items[first_index].due_date,
+        assigned_to: this.props.todoList.items[first_index].assigned_to,
+        completed: this.props.todoList.items[first_index].completed,
+        key : original_key
+    }
+
+    // Second item:
+    let second_item = {
+        description: this.props.todoList.items[second_index].description,
+        due_date: this.props.todoList.items[second_index].due_date,
+        assigned_to: this.props.todoList.items[second_index].assigned_to,
+        completed: this.props.todoList.items[second_index].completed,
+        key : this.props.todoList.items[second_index].key
+    }
+
+    // Swap 
+
+    this.props.todoList.items.splice(first_index, 1);
+    this.props.todoList.items.splice(second_index, 1);
+
+    this.props.todoList.items.splice(second_index, 0, first_item);
+    this.props.todoList.items.splice(first_index, 0, second_item);
 
     const fireStore = getFirestore();
-    let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
-
-    // Swap keys
-    let original_key = this.props.item.key;
-    let first_index = this.props.todoList.items.indexOf(original_key);
-    let item1_assigned_to = this.props.item.assigned_to;
-    let item1_completed = this.props.item.completed;
-    let item1_description = this.props.item.description;
-    let item1_due_date = this.props.item.due_date
-
-    let second_key = this.props.item.key - 1;
-    let second_index = this.props.todoList.items.indexOf(second_key);
-    let item2_assigned_to = this.props.todoList.items[second_key].assigned_to;
-    let item2_completed = this.props.todoList.items[second_key].completed;
-    let item2_description = this.props.todoList.items[second_key].description;
-    let item2_due_date = this.props.todoList.items[second_key].due_date;
-
-    // Delete both then add back with new keys:
-    // Delete from firestore:
-    
-    // Item 1 DELETE: (Original)
-        reference.update({
-            'items': fireStore.FieldValue.arrayRemove({
-                assigned_to: this.props.item.assigned_to,
-                completed: this.props.item.completed,
-                description: this.props.item.description,
-                due_date: this.props.item.due_date,
-                key: this.props.item.key,
-            })
-        });
-    // Item 2 DELETE: (ABOVE)
-        reference.update({
-            'items': fireStore.FieldValue.arrayRemove({
-                assigned_to: this.props.todoList.items[second_key].assigned_to,
-                completed: this.props.todoList.items[second_key].completed,
-                description: this.props.todoList.items[second_key].description,
-                due_date: this.props.todoList.items[second_key].due_date,
-                key: this.props.todoList.items[second_key].key,
-            })
-        });
-        // Item 1 ADD (Replace with above key) Item 1 = Item 2
-        reference.update({
-            'items': fireStore.FieldValue.arrayUnion({
-                assigned_to: item1_assigned_to,
-                completed: item1_completed,
-                description: item1_description,
-                due_date: item1_due_date,
-                key: second_key,
-            })
-        });
-        // Item 1 ADD (Replace with above key) Item 2 = Item 1
-        reference.update({
-            'items': fireStore.FieldValue.arrayUnion({
-                assigned_to: item2_assigned_to,
-                completed: item2_completed,
-                description: item2_description,
-                due_date: item2_due_date,
-                key: original_key,
-            })
-        });
-        
-        this.props.todoList.items.sort(function(a, b) {
-            return parseFloat(a.key) - parseFloat(b.key);
-        });
+    fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
 
 
+    // this.setState({goList : true}); // re render
 
 }
 
 processMoveDown = (e) => {
 
     e.preventDefault();
+    let original_key = this.props.item.key;
+
+    let first_index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(original_key);
+    let second_index = first_index + 1; // Below
+
+    // First item:
+    let first_item = {
+        description: this.props.todoList.items[first_index].description,
+        due_date: this.props.todoList.items[first_index].due_date,
+        assigned_to: this.props.todoList.items[first_index].assigned_to,
+        completed: this.props.todoList.items[first_index].completed,
+        key : original_key
+    }
+
+    // Second item:
+    let second_item = {
+        description: this.props.todoList.items[second_index].description,
+        due_date: this.props.todoList.items[second_index].due_date,
+        assigned_to: this.props.todoList.items[second_index].assigned_to,
+        completed: this.props.todoList.items[second_index].completed,
+        key : this.props.todoList.items[second_index].key
+    }
+
+    // Swap 
+
+    this.props.todoList.items.splice(first_index, 1);
+    this.props.todoList.items.splice(second_index, 1);
+
+    this.props.todoList.items.splice(first_index, 0, second_item);
+    this.props.todoList.items.splice(second_index, 0, first_item);
 
     const fireStore = getFirestore();
-    let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
+    fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
 
-    this.setState({goList : true});
 
 }
 
