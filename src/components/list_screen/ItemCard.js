@@ -103,16 +103,11 @@ processDelete = (e) => {
     const fireStore = getFirestore();
     let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
 
-    // Delete from firestore:
-    reference.update({
-        'items': fireStore.FieldValue.arrayRemove({
-            assigned_to: this.props.item.assigned_to,
-            completed: this.props.item.completed,
-            description: this.props.item.description,
-            due_date: this.props.item.due_date,
-            key: this.props.item.key
-        })
-    });
+    let index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(this.props.item.key);
+
+    this.props.todoList.items.splice(index, 1);
+    fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
+
     this.setState({goList : true});
 }
 

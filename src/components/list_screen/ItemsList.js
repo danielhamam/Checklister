@@ -131,12 +131,12 @@ class ItemsList extends React.Component {
 
     addItem = () => {
 
-
         const fireStore = getFirestore();
         let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
 
         reference.update({
             'items': fireStore.FieldValue.arrayUnion({
+                isOldItem: false,
                 assigned_to: "Unknown",
                 completed: false,
                 description: "Unknown",
@@ -147,6 +147,7 @@ class ItemsList extends React.Component {
 
         // Add it to front end too
         const new_item = {
+            isOldItem: false,
             assigned_to: "Unknown",
             completed: false,
             description: "Unknown",
@@ -183,7 +184,7 @@ class ItemsList extends React.Component {
             </div>
                               
                 {items && items.map(item => (
-                        <Link to={'/todoList/' + todoList.id + '/' + item.key} key={item.key} item={item}>
+                        <Link to={'/todoList/' + todoList.id + '/' + this.props.todoList.items.map(function (item) {return item.key;}).indexOf(item.key)} key={item.key} item={item}>
                             <ItemCard todoList={todoList} item={item} />
                         </Link>
                 )

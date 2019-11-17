@@ -14,16 +14,22 @@ class HomeScreen extends Component {
 
     handleNewList = () => {
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').add({
+        let example = fireStore.collection('todoLists').add({
                 created_time: new Date(),
                 key: 0,
                 name: 'Unknown',
                 owner: 'Unknown',
                 items: [],
-        }).then(function (docRef) {
-            this.setState({reference : docRef.id})
         });
-        this.setState({isNewItem : true})
+        
+        let result1 = example;
+
+        result1.then(function(data){
+            this.setState({reference: data});
+        })
+
+        this.setState({isNewItem : true});
+        
     }
 
     render() {

@@ -5,8 +5,8 @@ class TodoListCard extends React.Component {
 
     putListFirst = () => {
 
-    let initialKey = this.props.todoList.key;
-    this.props.todoList.key = 0;
+    // let initialKey = this.props.todoList.key;
+    // this.props.todoList.key = 0;
     // let first_list = fireStore.collect
 
     //     const fireStore = getFirestore();

@@ -10,7 +10,6 @@ class TodoListLinks extends React.Component {
     updateLists = () => {
         // Do not update firestore order, update order on frontend
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').orderBy('key');
     }
 
     render() {
