@@ -60,7 +60,13 @@ class ItemScreen extends Component {
         const fireStore = getFirestore();
         let reference = fireStore.collection('todoLists').doc(this.props.todoList.id);
 
-        this.setState({new_completed: event.target.value});
+        if (event.target.checked == true) {
+            this.setState({new_completed: true});
+        }
+        if (event.target.checked == false) {
+            this.setState({new_completed: false});
+        }
+
     }
 
     processCancelChanges = () => {
@@ -70,7 +76,7 @@ class ItemScreen extends Component {
 
         // If original states were the default, it was add item
         let description = this.state.old_description;
-        let assigned_to= this.state.old_assigned_to;
+        let assigned_to = this.state.old_assigned_to;
         let completed = this.state.old_completed;
         let due_date = this.state.old_due_date;
 

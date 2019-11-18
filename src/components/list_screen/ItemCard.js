@@ -105,7 +105,16 @@ processDelete = (e) => {
     fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: this.props.todoList.items});
 
     this.setState({goList : true});
-}
+
+    }
+
+checkColor = () => {
+
+    let index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(this.props.item.key);
+    if (index == this.props.todoList.items.length - 1) {
+        document.getElementById("item_button2").style.backgroundColor = "gray";
+        }
+    }
 
     render() {
         if (this.state.goList) {
@@ -125,6 +134,15 @@ processDelete = (e) => {
             style_card = "style_red";
         }
 
+        let moveUpClass = "item_button3";
+        let moveDownClass = "item_button2";
+        let index = this.props.todoList.items.map(function (item) {return item.key;}).indexOf(this.props.item.key);
+        if (index === 0)
+            moveUpClass += " disabled";
+        if (index === (this.props.todoList.items.length - 1))
+            moveDownClass += " disabled";
+
+
         return (
 
             <div class="white card todo-list-link pink-lighten-3">
@@ -141,16 +159,19 @@ processDelete = (e) => {
             </div>
 
             <Button id="floating_button" floating fab={{direction: 'left'}} className="green" large >
-                <Button floating className="red" id="item_button1">
+                <Button floating id="item_button1">
                     <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
                 </Button>
-                <Button floating className="purple" id="item_button2">
+                <Button floating className={moveDownClass} >
                     <Icon fontSize="large" onClick={this.processMoveDown}>arrow_downward</Icon>
                 </Button>
-                <Button floating className="blue" id="item_button3">
+                <Button floating className={moveUpClass} >
                     <Icon fontSize="large" onClick={this.processMoveUp}>arrow_upward</Icon>
                 </Button>
             </Button>
+
+            {/* {this.checkColor()} */}
+
             </div>
 
             
