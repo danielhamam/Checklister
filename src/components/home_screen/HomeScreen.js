@@ -10,6 +10,7 @@ class HomeScreen extends Component {
     state = {
         isNewItem : false,
         list_index : 101010,
+        rerender : false,
     }
 
     handleNewList = () => {
@@ -32,6 +33,21 @@ class HomeScreen extends Component {
         
     }
 
+    sortLists = () => {
+        // Basically when you click @todo to go back from the list. 
+        const fireStore = getFirestore();
+        let reference = fireStore.collection('todoLists');
+
+
+        fireStore.collection('todoLists').orderBy('created_time');
+
+        let query = reference.orderBy('created_time', 'asc');
+        let query2 = reference.orderBy('created_time', 'desc');
+
+        // this.setState({rerender : true});
+
+    }
+
     render() {
 
         if (this.state.isNewItem) {
@@ -47,7 +63,7 @@ class HomeScreen extends Component {
                 <div className="row">
                     <div id="your_lists">Your Lists</div> 
                     <div className="col s12 m4">
-                        <TodoListLinks />
+                        <TodoListLinks onClick = {this.sortLists()}/>
                     </div>
 
                     <div className="col s8" >
@@ -78,6 +94,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-      { collection: 'todoLists' },
+      { collection: 'todoLists', orderBy: ['created_time', 'desc']},
     ]),
 )(HomeScreen);
