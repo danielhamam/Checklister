@@ -15,7 +15,6 @@ class HomeScreen extends Component {
 
     handleNewList = () => {
         let answer = Math.floor(Math.random() * 1000) + 100;
-        let id = Math.floor(Math.random() * 1000) + 100;
         const fireStore = getFirestore();
         // new item
         fireStore.collection('todoLists').add ({
