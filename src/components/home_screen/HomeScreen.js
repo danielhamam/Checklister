@@ -15,6 +15,7 @@ class HomeScreen extends Component {
 
     handleNewList = () => {
         let answer = Math.floor(Math.random() * 1000) + 100;
+        let id = Math.floor(Math.random() * 1000) + 100;
         const fireStore = getFirestore();
         // new item
         fireStore.collection('todoLists').add ({
@@ -23,35 +24,30 @@ class HomeScreen extends Component {
             name: 'Unknown',
             owner: 'Unknown',
             items: [],
+        }).then(ref => {
+            this.setState({list_index: ref.id});
+            this.setState({isNewItem : true});
+        }).catch((error) => {
+            console.log(error);
         });
-
-        // reference.orderBy('created_time', 'desc');
-        // let index = this.props.todoLists.map(function (todoList) {return todoList.key;}).indexOf(answer);
-        let index = this.props.todoLists.map(function (todoList) {return todoList.key;}).indexOf(this.state.answer);
-        this.setState({list_index: index});
-        // this.setState({isNewItem : true});
-        
     }
-
-    sortLists = () => {
-        // Basically when you click @todo to go back from the list. 
+    
+    updateList = (event) => {
+        // Update the created_time so it can be on top
         const fireStore = getFirestore();
-        let reference = fireStore.collection('todoLists');
-
-
-        fireStore.collection('todoLists').orderBy('created_time');
-
-        let query = reference.orderBy('created_time', 'asc');
-        let query2 = reference.orderBy('created_time', 'desc');
-
-        // this.setState({rerender : true});
-
+        let baseURI = event.target.baseURI;
+        let TARGET_ID = baseURI.split('/').pop();
+        
+        let reference = fireStore.collection("todoLists").doc(TARGET_ID);
+        reference.update({
+            created_time: new Date()
+        })
     }
 
     render() {
 
         if (this.state.isNewItem) {
-           return <Redirect to={'/todoList/' + this.props.todoLists[this.state.list_index].id} />;
+           return <Redirect to={'/todoList/' + this.state.list_index} />;
         }
 
         if (!this.props.auth.uid) {
@@ -62,8 +58,8 @@ class HomeScreen extends Component {
             <div className="dashboard container">
                 <div className="row">
                     <div id="your_lists">Your Lists</div> 
-                    <div className="col s12 m4">
-                        <TodoListLinks onClick = {this.sortLists()}/>
+                    <div className="col s12 m4" onClick={this.updateList}>
+                        <TodoListLinks/>
                     </div>
 
                     <div className="col s8" >
