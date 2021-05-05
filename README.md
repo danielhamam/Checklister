@@ -7,6 +7,8 @@ in and out as to save their tasks. They can move sub-tasks up and down by their 
 delete/add new tasks at their free will. User authentication and data is managed by Google's Firebase/Firestore. Please see the last two screenshots to view how
 the database is structured.
 
+•	Tools used:   JavaScript,   React,   Redux,   NoSQL,   HTML/CSS,   Materialize
+
 ![](images/todolist1.png)
 ![](images/todolist2.png)
 ![](images/todolist3.png)
