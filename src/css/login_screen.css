@@ -1,0 +1,27 @@
+
+#login-dashboard {
+    width: 100%;
+    height: 100%;
+    /* background-color: white; */
+    border-style: solid;
+    border-width: var(--standard-border-width);
+    background-image: var(--standard-color-gradient);
+}
+
+div.banner {
+    /* background-image: linear-gradient(to bottom, #b8b808, #636723); */
+    background-color: var(--counter-color);
+    color: white;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 80px;
+    padding: 5%;
+  }
+
+.login-element {
+    margin-top: 6%;
+    margin-bottom: 3%;
+}

@@ -4,7 +4,10 @@ import ReactDOM from 'react-dom';
 
 import './css/todo_layout.css'
 import './css/todo_style.css'
-import * as serviceWorker from './serviceWorker';
+import './css/navbar.css'
+import './css/home_screen.css'
+import './css/login_screen.css'
+// import * as serviceWorker from './serviceWorker';
 
 import ReactReduxFirebaseApp from './store/ReactReduxFirebaseApp'
 

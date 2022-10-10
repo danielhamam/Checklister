@@ -1,0 +1,9 @@
+
+#navbar {
+    border-style: solid;
+    border-width: var(--standard-border-width);
+    border-bottom: 0;
+    border-color: black;
+    /* background-image: var(--standard-color-gradient); */
+    background-color: var(--counter-color);
+}

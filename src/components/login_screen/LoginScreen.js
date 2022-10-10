@@ -44,30 +44,39 @@ class LoginScreen extends Component {
     }
 
     return (
-      <div className="container">
-        <div className="row">
-          <form onSubmit={this.handleSubmit} className="col s4 white">
-            <h5 className="grey-text text-darken-3">Login</h5>
-            <div className="input-field">
-              <label htmlFor="email">Email</label>
-              <input className="active" type="email" name="email" id="email" onChange={this.handleChange} />
+      <div id="login-dashboard"> 
+        <div className="container" style={{width: '91%'}}>
+          <div className="row">
+            <div className="col s5 login-element">
+              <form onSubmit={this.handleSubmit}>
+                <h4 className="text-darken-3"> <b> Login </b> </h4>
+                <br/>
+                <div className="input-field">
+                  <label htmlFor="email">Email</label>
+                  <input className="active" type="email" name="email" id="email" onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                  <label htmlFor="password">Password</label>
+                  <input className="active" type="password" name="password" id="password" onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                  <button type="submit" className="btn pink lighten-1 z-depth-0">Login</button>
+                  {authError ? <div className="red-text center"><p>{authError}</p></div> : null}
+                </div>
+              </form>
+            </div> 
+            <div className="col s5 offset-s2 login-element">
+              <div className='banner'> 
+                <p style={{fontSize:'3.9vw'}}>
+                  <span>Checklister&trade;</span>
+                  <br/>
+                  <span style={{fontSize:'1.8vw'}}>Easy, Customizable and Fun </span>
+                </p>
+              </div>
             </div>
-            <div className="input-field">
-              <label htmlFor="password">Password</label>
-              <input className="active" type="password" name="password" id="password" onChange={this.handleChange} />
-            </div>
-            <div className="input-field">
-              <button type="submit" className="btn pink lighten-1 z-depth-0">Login</button>
-              {authError ? <div className="red-text center"><p>{authError}</p></div> : null}
-            </div>
-          </form>
-
-          <div className="col s8 banner">
-            @todo<br />
-            List Maker
           </div>
         </div>
-      </div>
+    </div>
     );
   }
 }

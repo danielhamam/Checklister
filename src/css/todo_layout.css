@@ -11,6 +11,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
+  --standard-border-width: 2px;
+  --standard-color-gradient: linear-gradient(to bottom, #FFFAFA, #FFFFFF);
+  --counter-color: #424242
 }
 
 body {
@@ -20,14 +23,9 @@ body {
   top: 5%;
 }
 
-div.banner {
-  padding: 20px;
-  margin-top: 60px;
-}
-
 form {
-  padding: 20px;
-  margin-top: 60px;
+  /* padding: 20px; */
+  /* margin-top: 60px; */
 }
 
 form button, form h5 {

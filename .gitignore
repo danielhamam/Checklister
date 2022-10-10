@@ -1,1 +1,6 @@
+
+# Standard git ignores
 node_modules/
+
+# Ignore configs
+src/config/

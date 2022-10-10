@@ -18,20 +18,6 @@ body {
   font-family: 'Lexend Exa';
 }
 
-div.banner {
-  background-image: linear-gradient(to bottom,         
-  #b8b808, #636723);
-  color: white;
-  font-size: 48pt;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 10px;
-  padding-left: 10%;
-  padding-top: 5%;
-  padding-bottom: 5%;
-}
-
 .home_new_list_button {
   font-size: 32pt;
 }
@@ -143,7 +129,7 @@ font-size: 16pt;
 }
 
 .container {
-  background:  #E6E6E6;
+  /* background:  #E6E6E6; */
 }
 
 #your_lists {
