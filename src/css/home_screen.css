@@ -1,4 +1,18 @@
-
-#home-dashboard {
-    width: 100%;
+.banner-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+.home_new_list_button {
+    margin-top: 5%;
+}
+
+#your_lists {
+    font-family: 'Lexend Exa';
+    position: relative;
+    font-size: 24pt;
+    color: gray;
+    font-weight: bold;
+  }

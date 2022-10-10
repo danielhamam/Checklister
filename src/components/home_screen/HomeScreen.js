@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import TodoListLinks from './TodoListLinks';
 import { getFirestore } from 'redux-firestore';
+
+import Banner from '../others/Banner';
 
 class HomeScreen extends Component {
     state = {
@@ -54,23 +56,24 @@ class HomeScreen extends Component {
         }
         return (
             
-            <div className="dashboard container">
-                <div className="row">
-                    <div id="your_lists">Your Lists</div> 
-                    <div className="col s12 m4" onClick={this.updateList}>
-                        <TodoListLinks/>
-                    </div>
-
-                    <div className="col s8" >
-                        <div className="banner">
-                            @todo<br />
-                            List Maker
-                        </div>
-                        
-                        <div className="home_new_list_container">
-                                <button className="home_new_list_button" onClick={this.handleNewList}>
-                                    Create a New To Do List
-                                </button>
+            <div className="dashboard">
+                <div className='container fit_nav_width'>
+                    <div className="row row-margin">
+                        <div className="col s5">
+                            <div id="your_lists">Your Lists</div> 
+                            <div onClick={this.updateList}>
+                                <TodoListLinks/>
+                            </div>
+                        </div> 
+                        <div className="col s5 offset-s2">
+                            <div className='banner-flex'>
+                                <Banner/>
+                                <div className="home_new_list_container">
+                                    <button className="home_new_list_button" onClick={this.handleNewList}>
+                                        Create a New To Do List
+                                    </button>
+                                </div>
+                            </div> 
                         </div>
                     </div>
                 </div>

@@ -2,11 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './css/todo_layout.css'
-import './css/todo_style.css'
+import './css/shared.css'
 import './css/navbar.css'
 import './css/home_screen.css'
 import './css/login_screen.css'
+import './css/register_screen.css'
 // import * as serviceWorker from './serviceWorker';
 
 import ReactReduxFirebaseApp from './store/ReactReduxFirebaseApp'

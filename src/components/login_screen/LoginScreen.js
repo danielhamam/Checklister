@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
-
+import Banner from '../others/Banner'; 
 import { loginHandler } from '../../store/database/asynchHandler'
 
 class LoginScreen extends Component {
@@ -44,9 +44,9 @@ class LoginScreen extends Component {
     }
 
     return (
-      <div id="login-dashboard"> 
-        <div className="container" style={{width: '91%'}}>
-          <div className="row">
+      <div className="dashboard"> 
+        <div className="container fit_nav_width">
+          <div className="row row-margin">
             <div className="col s5 login-element">
               <form onSubmit={this.handleSubmit}>
                 <h4 className="text-darken-3"> <b> Login </b> </h4>
@@ -66,13 +66,7 @@ class LoginScreen extends Component {
               </form>
             </div> 
             <div className="col s5 offset-s2 login-element">
-              <div className='banner'> 
-                <p style={{fontSize:'3.9vw'}}>
-                  <span>Checklister&trade;</span>
-                  <br/>
-                  <span style={{fontSize:'1.8vw'}}>Easy, Customizable and Fun </span>
-                </p>
-              </div>
+              <Banner/>
             </div>
           </div>
         </div>

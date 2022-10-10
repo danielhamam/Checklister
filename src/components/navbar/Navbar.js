@@ -14,7 +14,7 @@ class Navbar extends React.Component {
 
     return (
       <nav id="navbar" className="nav-wrapper">
-        <div className="container" style={{width: "91%"}}>
+        <div className="container fit_nav_width">
           <Link to="/" className="brand-logo">Checklister</Link>
           {links}
         </div>

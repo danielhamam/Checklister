@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+import Banner from '../others/Banner';
 import { registerHandler } from '../../store/database/asynchHandler'
 
 class RegisterScreen extends Component {
@@ -15,7 +16,6 @@ class RegisterScreen extends Component {
 
   handleChange = (e) => {
     const { target } = e;
-
     this.setState(state => ({
       ...state,
       [target.id]: target.value,
@@ -24,11 +24,9 @@ class RegisterScreen extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     const { props, state } = this;
     const { firebase } = props;
     const newUser = { ...state };
-
     props.register(newUser, firebase);
   }
 
@@ -39,31 +37,41 @@ class RegisterScreen extends Component {
     }
 
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="white">
-          <h5 className="grey-text text-darken-3">Register</h5>
-          <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" onChange={this.handleChange} />
+      <div className="dashboard"> 
+        <div className="container fit_nav_width">
+          <div className="row row-margin">
+            <div className="col s5 login-element">
+              <form onSubmit={this.handleSubmit}>
+                <h4 className="text-darken-3"> <b> Register </b> </h4>
+                <br/>
+                <div className="input-field">
+                  <label htmlFor="email">Email</label>
+                  <input className="active" type="email" name="email" id="email" onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                  <label htmlFor="password">Password</label>
+                  <input className="active" type="password" name="password" id="password" onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                   <label htmlFor="firstName">First Name</label>
+                   <input type="text" name="firstName" id="firstName" onChange={this.handleChange} />
+                 </div>
+                 <div className="input-field">
+                   <label htmlFor="lastName">Last Name</label>
+                   <input type="text" name="lastName" id="lastName" onChange={this.handleChange} />
+                 </div>
+                <div className="input-field">
+                  <button type="submit" className="btn pink lighten-1 z-depth-0">Submit</button>
+                  {authError ? <div className="red-text center"><p>{authError}</p></div> : null}
+                </div>
+              </form>
+            </div> 
+            <div className="col s5 offset-s2" style={{marginTop: '5%'}}>
+              <Banner/>
+            </div>
           </div>
-          <div className="input-field">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <label htmlFor="firstName">First Name</label>
-            <input type="text" name="firstName" id="firstName" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <label htmlFor="lastName">Last Name</label>
-            <input type="text" name="lastName" id="lastName" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <button type="submit" className="btn pink lighten-1 z-depth-0">Sign Up</button>
-            {authError ? <div className="red-text center"><p>{authError}</p></div> : null}
-          </div>
-        </form>
-      </div>
+        </div>
+    </div>
     );
   }
 }
