@@ -6,19 +6,46 @@
 // REDUCER, WHICH ADVANCES STATE
 
 // THESE ARE ALL THE TYPE OF ACTIONS WE'LL BE CREATING
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_ERROR = 'REGISTER_ERROR';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_ERROR = 'LOGIN_ERROR';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+// export const REGISTER_STARTED = 'REGISTER_STARTED';
+export const REGISTER_SUCCEEDED = 'REGISTER_SUCCEEDED';
+export const REGISTER_ERRORED = 'REGISTER_ERRORED';
+export const LOGIN_SUCCEEDED = 'LOGIN_SUCCESS';
+export const LOGIN_ERRORED = 'LOGIN_ERROR';
+export const LOGGED_OUT_LINK_CHANGED = 'LOGGED_OUT_LINK_CHANGED';
+export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
-export function registerSuccess() {
-    return { type: 'REGISTER_SUCCESS' }
+/*********************************************************************
+* PURPOSE: When called, returns object with required information
+* WHERE IS IT USED?: Used in mapDispatchtoProps
+************************************************************************/
+export const showLinkOnNavbar = (link) => {
+    console.log("HERE with", link);
+    return { 
+        type: LOGGED_OUT_LINK_CHANGED,
+        loggedOutLink : link
+    }
 };
-export function registerError(error) { 
-    return { type: 'REGISTER_ERROR', error }
+
+export const resetAuthError = () => {
+    return { 
+        type: RESET_AUTH_ERROR,
+        error: ''
+    }
+};
+export const registerSucceeded = () => {
+    return { 
+        type: REGISTER_SUCCEEDED,
+        // user: newUser
+    }
+};
+export function registerErrored(error) { 
+    console.log("Registering register errored function, attaching error: ", error);
+    return { 
+        type: REGISTER_ERRORED, 
+        error : error
+    }
 };
 export function loginSuccess() {
     return { type: 'LOGIN_SUCCESS' }
@@ -30,16 +57,16 @@ export function logoutSuccess() {
     return { type: 'LOGOUT_SUCCESS' }
 };
 
-// THESE CREATORS MAKE ACTIONS FOR ASYNCHRONOUS TODO LIST UPDATES
-export function createTodoList(todoList) {
-    return {
-        type: 'CREATE_TODO_LIST',
-        todoList
-    }
-}
-export function createTodoListError(error) {
-    return {
-        type: 'CREATE_TODO_LIST_ERROR',
-        error
-    }
-}
+// // THESE CREATORS MAKE ACTIONS FOR ASYNCHRONOUS TODO LIST UPDATES
+// export function createTodoList(todoList) {
+//     return {
+//         type: 'CREATE_TODO_LIST',
+//         todoList
+//     }
+// }
+// export function createTodoListError(error) {
+//     return {
+//         type: 'CREATE_TODO_LIST_ERROR',
+//         error
+//     }
+// }

@@ -4,7 +4,9 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import Banner from '../others/Banner';
-import { registerHandler } from '../../store/database/asynchHandler'
+import { registerHandler } from '../../store/database/asyncHandler'
+import { getFirestore } from 'redux-firestore';
+import { registerSucceeded, registerErrored, resetAuthError, showLinkOnNavbar } from '../../store/actions/actionCreators';
 
 class RegisterScreen extends Component {
   state = {
@@ -24,17 +26,23 @@ class RegisterScreen extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Submitting registration form.........")
     const { props, state } = this;
     const { firebase } = props;
     const newUser = { ...state };
-    props.register(newUser, firebase);
+    registerHandler(newUser, firebase, getFirestore(), this.props.registerSucceeded, this.props.registerErrored);
+  }
+
+  componentDidMount = () => {
+    if (this.props.loggedOutLink !== '/login') {
+      this.props.showLinkOnNavbar('/login');
+    }
+    this.props.resetAuthError();
   }
 
   render() {
     const { auth, authError } = this.props;
-    if (auth.uid) {
-      return <Redirect to="/" />;
-    }
+    if (auth.uid) { return <Redirect to="/" />; }
 
     return (
       <div className="dashboard"> 
@@ -61,7 +69,7 @@ class RegisterScreen extends Component {
                    <input type="text" name="lastName" id="lastName" onChange={this.handleChange} />
                  </div>
                 <div className="input-field">
-                  <button type="submit" className="btn pink lighten-1 z-depth-0">Submit</button>
+                  <button type="submit" className="btn pink lighten-1 z-depth-0">Register</button>
                   {authError ? <div className="red-text center"><p>{authError}</p></div> : null}
                 </div>
               </form>
@@ -82,7 +90,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (newUser, firebase) => dispatch(registerHandler(newUser, firebase)),
+  // registerStarted: () => dispatch(registerStarted()),
+  registerSucceeded: (user) => dispatch(registerSucceeded(user)),
+  registerErrored: (error) => dispatch(registerErrored(error)),
+  resetAuthError: () => dispatch(resetAuthError()),
+  showLinkOnNavbar: (link) => dispatch(showLinkOnNavbar(link)),
+  // register: (newUser, firebase) => dispatch(registerHandler(newUser, firebase)),
 });
 
 export default compose(

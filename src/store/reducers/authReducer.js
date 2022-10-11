@@ -4,32 +4,48 @@ import * as actionCreators from '../actions/actionCreators'
 // THEIR JOB IS TO ADVANCE THE STATE. THEY WILL UPDATE
 // AND RETURN THE NEW, UPDATED STATE
 
-const initState = {};
+const initState = {
+  authError: '',
+  loggedOutLink : ''
+};
 
 const authReducer = (state = initState, action) => {
+  // console.log("authReducer: Beginning mapping of type " + action.type + " to corresponding handler");
   switch (action.type) {
-    case actionCreators.LOGIN_ERROR:
+    case actionCreators.RESET_AUTH_ERROR:
+      return {
+        ...state,
+        authError: ''
+      };
+    case actionCreators.LOGGED_OUT_LINK_CHANGED:
+      return {
+        ...state,
+        loggedOutLink: action.loggedOutLink
+      };
+    case actionCreators.REGISTER_SUCCEEDED:
+      return {
+        ...state,
+        // user : action.user, // commented out - user object is available via firebase.auth
+        authError: ''   
+      };
+    case actionCreators.REGISTER_ERRORED:
+      // console.log("Mapped to Register Errored with message: ", action.error)
+      return {
+        ...state,
+        authError: action.error     
+      };
+    case actionCreators.LOGIN_ERRORED:
       return {
         ...state,
         authError: 'Login fail',
       };
-    case actionCreators.LOGIN_SUCCESS:
+    case actionCreators.LOGIN_SUCCEEDED:
       return {
         ...state,
         authError: null,
       };
-    case actionCreators.LOGOUT_SUCCESS:
-      return state;
-    case actionCreators.REGISTER_SUCCESS:
-      return {
-        ...state,
-        authError: null,
-      };
-    case actionCreators.REGISTER_ERROR:
-      return {
-        ...state,
-        authError: action.err.message,
-      };
+    // case actionCreators.LOGOUT_SUCCEEDED:
+    //   return state;
     default:
       return state;
   }

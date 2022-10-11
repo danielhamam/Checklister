@@ -4,7 +4,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import Banner from '../others/Banner'; 
-import { loginHandler } from '../../store/database/asynchHandler'
+import { loginHandler } from '../../store/database/asyncHandler'
+import { loginErrored, loginSucceeded, showLinkOnNavbar, resetAuthError } from '../../store/actions/actionCreators';
 
 class LoginScreen extends Component {
   state = {
@@ -36,6 +37,14 @@ class LoginScreen extends Component {
 
     props.login(authData);
   }
+
+  componentDidMount = () => {
+    if (this.props.loggedOutLink !== '/register') {
+      this.props.showLinkOnNavbar('/register');
+    }
+    this.props.resetAuthError();
+  }
+
 
   render() {
     const { auth, authError } = this.props;
@@ -78,10 +87,13 @@ class LoginScreen extends Component {
 const mapStateToProps = state => ({
   authError: state.auth.authError,
   auth: state.firebase.auth,
+  loggedOutLink : state.auth.loggedOutLink
 });
 
 const mapDispatchToProps = dispatch => ({
   login: authData => dispatch(loginHandler(authData)),
+  showLinkOnNavbar: (link) => dispatch(showLinkOnNavbar(link)),
+  resetAuthError: () => dispatch(resetAuthError())
 });
 
 // We need firebaseConnect function to provide to this component
