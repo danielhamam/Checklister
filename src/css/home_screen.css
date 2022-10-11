@@ -5,8 +5,15 @@
     align-items: center;
 }
 
+.todo_card {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
 .home_new_list_button {
     margin-top: 5%;
+    font-size: 2.7vw;
 }
 
 #your_lists {
@@ -15,4 +22,10 @@
     font-size: 24pt;
     color: gray;
     font-weight: bold;
-  }
+}
+
+/* Hovers */
+
+.todo_card:hover, .home_new_list_button:hover {
+    opacity: var(--standard-onhover);
+}

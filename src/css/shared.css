@@ -11,6 +11,10 @@
   --swatch-accent:        #669966; /* USED IN MOUSE-OVER SELECTION OF TEXT AND BORDERS */    
   --my-font-family:       "Robaaaoto";
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  --standard-onhover : 0.6; /* opacity */
+  --standard-border-width: 2px;
+  --standard-color-gradient: linear-gradient(to bottom, #FFFAFA, #FFFFFF);
+  --counter-color: #424242;
 }
 
 html {
@@ -28,9 +32,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
-  --standard-border-width: 2px;
-  --standard-color-gradient: linear-gradient(to bottom, #FFFAFA, #FFFFFF);
-  --counter-color: #424242;
   position: absolute;
   width: 80%;
   left: 10%;
@@ -207,13 +208,6 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 
 #todolist_header {
   font-size: 48pt;
-}
-
-.home_new_list_button {
-  font-size: 32pt;
-}
-.home_new_list_button:hover {
-  box-shadow: 1px 2px;
 }
 
 #description {

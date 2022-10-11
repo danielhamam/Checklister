@@ -7,6 +7,7 @@ import './css/navbar.css'
 import './css/home_screen.css'
 import './css/login_screen.css'
 import './css/register_screen.css'
+import './css/list_screen.css'
 // import * as serviceWorker from './serviceWorker';
 
 import ReactReduxFirebaseApp from './store/ReactReduxFirebaseApp'
