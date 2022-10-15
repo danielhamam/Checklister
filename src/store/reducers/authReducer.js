@@ -10,7 +10,7 @@ const initState = {
 };
 
 const authReducer = (state = initState, action) => {
-  // console.log("authReducer: Beginning mapping of type " + action.type + " to corresponding handler");
+  console.log("authReducer: Beginning mapping of type " + action.type + " to corresponding handler");
   switch (action.type) {
     case actionCreators.RESET_AUTH_ERROR:
       return {
@@ -37,12 +37,12 @@ const authReducer = (state = initState, action) => {
     case actionCreators.LOGIN_ERRORED:
       return {
         ...state,
-        authError: 'Login fail',
+        authError: action.error
       };
     case actionCreators.LOGIN_SUCCEEDED:
       return {
         ...state,
-        authError: null,
+        authError: '',
       };
     // case actionCreators.LOGOUT_SUCCEEDED:
     //   return state;

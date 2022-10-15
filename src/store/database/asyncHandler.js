@@ -1,14 +1,16 @@
 import * as actionCreators from '../actions/actionCreators.js'
 
-export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) => {
+export const loginHandler = (credentials, firebase, loginSucceeded, loginErrored) => {
+  console.log("authReducerHelpers.loginHandler: Beginning loginHandler for credentials: ", credentials);
     firebase.auth().signInWithEmailAndPassword(
       credentials.email,
       credentials.password,
     ).then(() => {
       console.log("LOGIN_SUCCESS");
-      dispatch({ type: 'LOGIN_SUCCESS' });
+      loginSucceeded();
     }).catch((err) => {
-      dispatch({ type: 'LOGIN_ERROR', err });
+      console.log("authReducerHelpers.loginHandler, error with login: ", err.message);
+      loginErrored(err.message);
     });
   };
 

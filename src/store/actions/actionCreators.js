@@ -9,8 +9,8 @@
 // export const REGISTER_STARTED = 'REGISTER_STARTED';
 export const REGISTER_SUCCEEDED = 'REGISTER_SUCCEEDED';
 export const REGISTER_ERRORED = 'REGISTER_ERRORED';
-export const LOGIN_SUCCEEDED = 'LOGIN_SUCCESS';
-export const LOGIN_ERRORED = 'LOGIN_ERROR';
+export const LOGIN_SUCCEEDED = 'LOGIN_SUCCEEDED';
+export const LOGIN_ERRORED = 'LOGIN_ERRORED';
 export const LOGGED_OUT_LINK_CHANGED = 'LOGGED_OUT_LINK_CHANGED';
 export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
 
@@ -47,11 +47,16 @@ export function registerErrored(error) {
         error : error
     }
 };
-export function loginSuccess() {
-    return { type: 'LOGIN_SUCCESS' }
+export function loginSucceeded() {
+    return { 
+        type: LOGIN_SUCCEEDED 
+    }
 };
-export function loginError(error) {
-    return { type: 'LOGIN_ERROR', error }
+export function loginErrored(error) {
+    return { 
+        type: LOGIN_ERRORED, 
+        error : error
+    }
 };
 export function logoutSuccess() {
     return { type: 'LOGOUT_SUCCESS' }
