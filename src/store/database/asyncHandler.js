@@ -25,7 +25,7 @@ export const registerHandler = (newUser, firebase, firestore, registerSucceeded,
   firebase.auth().createUserWithEmailAndPassword(
       newUser.email,
       newUser.password,
-  ).then(resp => firestore.collection('users').doc(resp.user.uid).set({
+  ).then(resp => firestore.collection('accounts').doc(resp.user.uid).set({
       firstName: newUser.firstName,
       lastName: newUser.lastName,
       initials: `${newUser.firstName[0]}${newUser.lastName[0]}`,

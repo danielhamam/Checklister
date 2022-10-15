@@ -87,7 +87,7 @@ class RegisterScreen extends Component {
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
   authError: state.auth.authError,
-  firebase: state.firebase
+  // firebase: state.firebase
 });
 
 const mapDispatchToProps = dispatch => ({

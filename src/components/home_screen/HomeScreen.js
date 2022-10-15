@@ -19,7 +19,7 @@ class HomeScreen extends Component {
         let answer = Math.floor(Math.random() * 1000) + 100;
         const fireStore = getFirestore();
         // new item
-        fireStore.collection('todoLists').add ({
+        fireStore.collection('accounts').doc(this.props.auth.uid).update({
             created_time: new Date(),
             key: answer, // key is just used to distinguish, doesn't really matter. We sort with index.
             name: 'Unknown',
