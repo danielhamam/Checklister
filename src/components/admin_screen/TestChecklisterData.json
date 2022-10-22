@@ -1,0 +1,63 @@
+{
+    "accounts": [
+        {
+            "created_time" : "10/12/2022, 3:00:10 PM", 
+            "administrator" : true,
+            "checklists" : 
+            [
+                {
+                    "name": "Journal Entry",
+                    "owner": "John Doe",
+                    "created_time": "10/16/2022, 3:29:30 PM",
+                    "tasks" : 
+                    [
+                        {
+                        "isOldItem" : false,
+                        "assigned_to" : "John Doe",
+                        "complete" : false,
+                        "description" : "Write down thoughts for the day",
+                        "due_date" : "2022-11-25",
+                        "key" : "500"
+                        }
+                    ]
+                },
+                {
+                    "name": "Submit HW Assignment",
+                    "owner": "Joe Flow",
+                    "created_time": "10/07/2022, 7:19:30 PM",
+                    "tasks" : 
+                    [
+                        {
+                        "isOldItem" : false,
+                        "assigned_to" : "Joe Flow",
+                        "complete" : false,
+                        "description" : "Submit computer science homework assignment",
+                        "due_date" : "2022-12-31",
+                        "key" : "505"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "created_time" : "10/10/2022, 1:00:00 PM", 
+            "administrator" : false,
+            "checklist" : {
+                "name": "Laundry",
+                "owner": "John Snow",
+                "created_time":"10/02/2022, 1:00:00 PM", 
+                "tasks" : 
+                  [
+                    {
+                      "isOldItem" : false,
+                      "assigned_to" : "John Snow",
+                      "complete" : false,
+                      "description" : "Finish laundry by end of day today",
+                      "due_date" : "2022-10-02",
+                      "key" : "192"
+                    }
+                  ]
+            }
+        }  
+    ]
+}

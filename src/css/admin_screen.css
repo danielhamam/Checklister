@@ -1,0 +1,53 @@
+/* --------------------------------------------- */ 
+/* ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN 
+    ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN 
+    ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN 
+/* --------------------------------------------- */ 
+
+#admin_wrapper {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background-image: linear-gradient(to bottom,         
+    #ffffff, silver);
+  }
+  
+  #admin_options {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 5%;
+    width: 100%;
+    /* margin: 50px; */
+    /* margin-top: 5%; */
+  }
+  
+  #admin_notes {
+    position: relative;
+    margin-top: 3%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13pt;
+    color: red;
+  }
+  
+  .handle_button {
+    position: relative;
+    font-size: 25pt;
+    /* text-align : center; */
+    cursor: pointer;
+  }
+  
+  #return_home {
+    /* margin-left: 5%; */
+  }
+  
+  #clear_database {
+    position: relative;
+    /* position: absolute; */
+    /* left: 20px; */
+  }
+  
+  #reset_database {
+    /* margin-right: 5%; */
+  }

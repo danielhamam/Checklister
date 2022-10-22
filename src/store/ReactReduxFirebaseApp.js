@@ -20,7 +20,7 @@ class ReactReduxFirebaseApp extends React.Component {
         // Create config for rrfProps object. We need this to pass it in the ReactReduxFirebaseProvider component
         const rrfConfig = {
             useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
-            userProfile: 'users',
+            userProfile: 'accounts', // all docs (todolist / administrator / create time) fetched from firestore
             attachAuthIsReady: true,
         };
 

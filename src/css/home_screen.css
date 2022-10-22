@@ -13,7 +13,12 @@
 
 .home_new_list_button {
     margin-top: 5%;
-    font-size: 2.7vw;
+    font-size: 2.3vw;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 15px;
+    padding: 15px;
 }
 
 #your_lists {
@@ -28,4 +33,5 @@
 
 .todo_card:hover, .home_new_list_button:hover {
     opacity: var(--standard-onhover);
+    cursor: pointer;
 }

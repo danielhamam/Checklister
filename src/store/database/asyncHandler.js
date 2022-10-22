@@ -1,4 +1,5 @@
 import * as actionCreators from '../actions/actionCreators.js'
+import { constants } from '../../constants'
 
 export const loginHandler = (credentials, firebase, loginSucceeded, loginErrored) => {
   console.log("authReducerHelpers.loginHandler: Beginning loginHandler for credentials: ", credentials);
@@ -25,14 +26,18 @@ export const registerHandler = (newUser, firebase, firestore, registerSucceeded,
   firebase.auth().createUserWithEmailAndPassword(
       newUser.email,
       newUser.password,
-  ).then(resp => firestore.collection('accounts').doc(resp.user.uid).set({
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      initials: `${newUser.firstName[0]}${newUser.lastName[0]}`,
-  })).then(() => {
-      registerSucceeded();
+  ).then((resp) => {
+  firestore.collection('accounts').doc(resp.user.uid).set({
+      administrator : false,
+      created_time: new Date().toLocaleString(),
+      // todoLists: constants.newUserToDoLists
+    }).then(() => {
+      firestore.collection('accounts').doc(resp.user.uid).collection('checklists').add(constants.newChecklist);
+      })
+  }).then(() => {
+    registerSucceeded();
   }).catch((err) => {
-      console.log("authReducerHelpers.registerHandler, error with registration: ", err.message);
+      console.log('authReducerHelpers.registerHandler, error with registration: ', err.message);
       registerErrored(err.message);
   });
 };

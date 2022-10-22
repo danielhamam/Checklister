@@ -1,7 +1,7 @@
 import React from 'react';
 import { getFirestore } from 'redux-firestore';
 
-class TodoListCard extends React.Component {
+class ChecklistCard extends React.Component {
 
     putListFirst = () => {
 
@@ -21,7 +21,7 @@ class TodoListCard extends React.Component {
     render() {
 
         const { todoList } = this.props;
-        console.log("TodoListCard, todoList.id: " + todoList.id);
+        console.log("ChecklistCard, todoList.id: " + todoList.id);
         return (
             <div className="todo_card card todo-list-link indigo lighten-5">
                 <div className="card-content grey-text text-darken-3">
@@ -31,4 +31,4 @@ class TodoListCard extends React.Component {
         );
     }
 }
-export default TodoListCard;
+export default ChecklistCard;

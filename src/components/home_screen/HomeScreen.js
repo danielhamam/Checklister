@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
-import TodoListLinks from './TodoListLinks';
+import { Link } from 'react-router-dom';
+import ChecklistCard from './ChecklistCard';
 import { getFirestore } from 'redux-firestore';
+import { constants } from '../../constants';
 
 import Banner from '../others/Banner';
 
@@ -16,16 +18,9 @@ class HomeScreen extends Component {
     }
 
     handleNewList = () => {
-        let answer = Math.floor(Math.random() * 1000) + 100;
         const fireStore = getFirestore();
-        // new item
-        fireStore.collection('accounts').doc(this.props.auth.uid).update({
-            created_time: new Date(),
-            key: answer, // key is just used to distinguish, doesn't really matter. We sort with index.
-            name: 'Unknown',
-            owner: 'Unknown',
-            items: [],
-        }).then(ref => {
+        fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').add(constants.newChecklist)
+        .then(ref => {
             this.setState({list_index: ref.id});
             this.setState({isNewItem : true});
         }).catch((error) => {
@@ -62,7 +57,13 @@ class HomeScreen extends Component {
                         <div className="col s5">
                             <div id="your_lists">Your Lists</div> 
                             <div onClick={this.updateList}>
-                                <TodoListLinks/>
+                                <div className="todo-lists section">
+                                    {this.props.todoLists && this.props.todoLists.map(todoList => (
+                                        <Link to={'/todoList/' + todoList.id} key={todoList.id} >
+                                            <ChecklistCard todoList={todoList}/>
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div> 
                         <div className="col s5 offset-s2">
@@ -70,7 +71,7 @@ class HomeScreen extends Component {
                                 <Banner/>
                                 <div className="home_new_list_container">
                                     <button className="home_new_list_button" onClick={this.handleNewList}>
-                                        Create a New To Do List
+                                        Create a new Checklist
                                     </button>
                                 </div>
                             </div> 
@@ -84,6 +85,7 @@ class HomeScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        isAdministrator : state.firebase.profile.administrator,
         todoLists: state.firestore.ordered.todoLists, //.ordered something we can map through. 
         auth: state.firebase.auth
     };
