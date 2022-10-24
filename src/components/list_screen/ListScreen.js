@@ -9,15 +9,17 @@ import { getFirestore } from 'redux-firestore';
 
 class ListScreen extends Component {
     state = {
-        name: this.props.todoList.name,
-        owner: this.props.todoList.owner,
+        // name: this.props.checklist.name,
+        // owner: this.props.checklist.owner,
+        name: '',
+        owner: '',
         NavigateHome: false, 
         rerender : false,
     }
 
     handleNameChange = (event) => {
 
-        getFirestore().collection('todoLists').doc(this.props.todoList.id).update({
+        getFirestore().collection('todoLists').doc(this.props.checklist.id).update({
             name: event.target.value,
          });
 
@@ -26,7 +28,7 @@ class ListScreen extends Component {
     }
     handleOwnerChange = (event) => {
 
-        getFirestore().collection('todoLists').doc(this.props.todoList.id).update({
+        getFirestore().collection('todoLists').doc(this.props.checklist.id).update({
             owner: event.target.value,
          });
 
@@ -56,14 +58,16 @@ class ListScreen extends Component {
     deleteList = () => {
 
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').doc(this.props.todoList.id).delete();
+        fireStore.collection('todoLists').doc(this.props.checklist.id).delete();
         this.toggleModal();
         this.setState({ NavigateHome : true});
    }
 
     render() {
         const auth = this.props.auth;
-        const todoList = this.props.todoList;
+        const checklist = this.props.checklist ? this.props.checklist[0] : null;
+
+        console.log('---------------PROPS:', this.props);
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
@@ -78,11 +82,11 @@ class ListScreen extends Component {
                     <div class="test_class">    Test-Class  </div>
                     <div className="input-field">
                         <label className="active" htmlFor="email">Name:</label>
-                        <input className="active" type="text" name="name" id="name" onChange={this.handleNameChange} defaultValue={this.props.todoList.name} />
+                        <input className="active" type="text" name="name" id="name" onChange={this.handleNameChange} defaultValue={checklist ? checklist.name : ''} />
                     </div>
                     <div className="input-field">
                         <label className="active" htmlFor="password">Owner:</label>
-                        <input className="active" type="text" name="owner" id="owner" onChange={this.handleOwnerChange} defaultValue={this.props.todoList.owner} />
+                        <input className="active" type="text" name="owner" id="owner" onChange={this.handleOwnerChange} defaultValue={checklist ? checklist.owner : ''} />
                     </div>
 
                     <div id="my_modal" class="modal">
@@ -96,7 +100,7 @@ class ListScreen extends Component {
                             <div id="last_line"> This list will not be retrievable.</div>
                     </div>
 
-                    <ItemsList todoList={todoList} />
+                    {/* <ItemsList checklist={this.props.checklist} /> */}
 
                 </div>
             </div>
@@ -104,21 +108,29 @@ class ListScreen extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps.match.params;
-  const { todoLists } = state.firestore.data;
-  const todoList = todoLists ? todoLists[id] : null;
-  todoList.id = id;
-
-  return {
-    todoList,
-    auth: state.firebase.auth,
-  };
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth,
+        checklist: state.firestore.ordered.checklist
+    };
 };
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    { collection: 'todoLists' },
-  ]),
+  firestoreConnect(props => {
+    console.log('---------------PROPS:', props);
+    return [
+        { 
+        collection: 'accounts',
+        doc: props.auth.uid,
+        subcollections: [
+            {
+                collection : 'checklists', 
+                doc: props.match.params.id,
+            }
+        ],
+        storeAs: 'checklist' // abstracts data in redux store
+        },
+    ]
+    }),
 )(ListScreen);

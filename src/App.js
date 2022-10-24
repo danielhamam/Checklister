@@ -28,8 +28,8 @@ class App extends Component {
               <Route path="/register" component={RegisterScreen} />
               <Route path="/login" component={LoginScreen} />
               <Route path="/admin" component={AdminScreen} />
-              <Route path="/todoList/:id/:key" component={ItemScreen} />
-              <Route path="/todoList/:id" component={ListScreen} />
+              <Route path="/checklist/:id/:key" component={ItemScreen} />
+              <Route path="/checklist/:id" component={ListScreen} />
               <Route path="/:any" component={HomeScreen} />
             </Switch>
           </div>

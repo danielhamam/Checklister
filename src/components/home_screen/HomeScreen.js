@@ -58,9 +58,9 @@ class HomeScreen extends Component {
                             <div id="your_lists">Your Lists</div> 
                             <div onClick={this.updateList}>
                                 <div className="todo-lists section">
-                                    {this.props.todoLists && this.props.todoLists.map(todoList => (
-                                        <Link to={'/todoList/' + todoList.id} key={todoList.id} >
-                                            <ChecklistCard todoList={todoList}/>
+                                    {this.props.checklists && this.props.checklists.map(checklist => (
+                                        <Link to={'/checklist/' + checklist.id} key={checklist.id} >
+                                            <ChecklistCard checklist={checklist}/>
                                         </Link>
                                     ))}
                                 </div>
@@ -86,14 +86,21 @@ class HomeScreen extends Component {
 const mapStateToProps = (state) => {
     return {
         isAdministrator : state.firebase.profile.administrator,
-        todoLists: state.firestore.ordered.todoLists, //.ordered something we can map through. 
+        checklists: state.firestore.ordered.checklists,  
         auth: state.firebase.auth
     };
 };
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-      { collection: 'todoLists', orderBy: ['created_time', 'desc']},
-    ]),
+    firestoreConnect(props => {
+        return [
+            { 
+            collection: 'accounts',
+            doc: props.auth.uid,
+            subcollections: [{collection : 'checklists'}], orderBy: ['created_time', 'desc'],
+            storeAs: 'checklists' // abstracts data in redux store
+            },
+        ]
+    }),
 )(HomeScreen);

@@ -29,8 +29,7 @@ export const registerHandler = (newUser, firebase, firestore, registerSucceeded,
   ).then((resp) => {
   firestore.collection('accounts').doc(resp.user.uid).set({
       administrator : false,
-      created_time: new Date().toLocaleString(),
-      // todoLists: constants.newUserToDoLists
+      created_time: new Date().toLocaleString()
     }).then(() => {
       firestore.collection('accounts').doc(resp.user.uid).collection('checklists').add(constants.newChecklist);
       })

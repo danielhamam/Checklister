@@ -31,7 +31,7 @@ class Banner extends Component {
 const mapStateToProps = (state) => {
   return {
       isAdministrator : state.firebase.profile.administrator,
-      todoLists: state.firestore.ordered.todoLists, //.ordered something we can map through. 
+      // todoLists: state.firestore.ordered.todoLists, //.ordered something we can map through. 
       auth: state.firebase.auth
   };
 };

@@ -23,34 +23,51 @@ class AdminScreen extends React.Component {
         this.setState({goHome : true});
       }
 
+    /*
+    * Clears all checklists in all accounts 
+    */
     handleClear = () => {
         const fireStore = getFirestore();
-        fireStore.collection('accounts').get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                let reference = fireStore.collection('accounts').doc(doc.id).get();
-                reference.then(
-                    doc => {
-                      let info = doc.data();
-                      if (info.administrator !== true) {
-                        fireStore.collection('accounts').doc(doc.id).delete();
-                      }
-            })
-        });
-    })
-}
+        fireStore.collection('accounts').get()
+            .then((accounts) => {
+                accounts.forEach((account) => {
+                    account.collection('checklists').get()
+                        .then((checklists) => {
+                            checklists.forEach((checklistDoc) => {
+                                fireStore.collection('accounts').doc(account.id).collection('checklists').doc(checklistDoc.id).delete();
+                            })
+                        })
+                });
+        })
+    }
 
+    
     handleReset = () => {
+        this.handleClear(); // clears database
         const fireStore = getFirestore();
+        const { firebase } = this.props;
         accountJson.accounts.forEach(accountJson => {
-            accountJson.checklists.forEach(checklist => {
-                fireStore.collection('accounts').doc(accountJson.accountId).collection('checklists').add({
-                    name: checklist.name,
-                    owner: accountJson.email,
+            firebase.auth().createUserWithEmailAndPassword(
+                accountJson.email,
+                accountJson.password
+            ).then((resp) => {
+                fireStore.collection('accounts').doc(resp.user.uid).set({
+                    administrator : accountJson.administrator,
                     created_time: accountJson.created_time,
-                    tasks : accountJson.tasks
-                })
+                }).then(() => {
+                    accountJson.checklists.forEach(checklist => {
+                        fireStore.collection('accounts').doc(resp.user.uid).collection('checklists').add({
+                            name: checklist.name,
+                            owner: checklist.owner,
+                            created_time: checklist.created_time,
+                            tasks : checklist.tasks
+                        })
+                    })
+                });
+            }).catch((err) => {
+                console.log('adminScreen.registerHandler, error with registration: ', err.message);
             })
-        });
+        })
     }
 
     checkAdministrator = () => {
@@ -82,16 +99,15 @@ class AdminScreen extends React.Component {
             return <Redirect to="/" />;
         }
 
-        this.checkAdministrator()
-        if (this.state.administrator === false) {
-            return <Redirect to="/" />;
-        }
+        // if (this.state.administrator === false) {
+        //     return <Redirect to="/" />;
+        // }
 
         return ( 
             <div id="admin_wrapper">
                 <div id="admin_options">
                   <button id="return_home" className="handle_button" onClick={this.goHome}> Return Home </button>
-                  <button id="reset_database" className="handle_button" onClick={this.handleReset}>Load Sample Database</button>
+                  <button id="reset_database" className="handle_button" onClick={this.handleReset}>Reset to Sample Database</button>
                   <button id="clear_database" className="handle_button" onClick={this.handleClear}>Clear Database</button>
                 </div>
                 <div id="admin_notes"> 
