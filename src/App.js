@@ -9,7 +9,7 @@ import RegisterScreen from './components/register_screen/RegisterScreen.js';
 import LoginScreen from './components/login_screen/LoginScreen.js';
 import HomeScreen from './components/home_screen/HomeScreen.js';
 import ListScreen from './components/list_screen/ListScreen.js';
-import ItemScreen from './components/item_screen/ItemScreen.js';
+import TaskScreen from './components/task_screen/TaskScreen.js';
 import AdminScreen from './components/admin_screen/AdminScreen.js';
 
 class App extends Component {
@@ -28,7 +28,7 @@ class App extends Component {
               <Route path="/register" component={RegisterScreen} />
               <Route path="/login" component={LoginScreen} />
               <Route path="/admin" component={AdminScreen} />
-              <Route path="/checklist/:id/:key" component={ItemScreen} />
+              <Route path="/checklist/:id/:key" component={TaskScreen} />
               <Route path="/checklist/:id" component={ListScreen} />
               <Route path="/:any" component={HomeScreen} />
             </Switch>

@@ -10,7 +10,7 @@ import { getFirestore } from 'redux-firestore';
 class TasksList extends React.Component {
     state = {
         CurrentSortingCriteria: "",
-        goItemScreenKey: -1,
+        goTaskScreenKey: -1,
         keytoUse: 10100,
     }
 
@@ -143,7 +143,7 @@ class TasksList extends React.Component {
         };
         reference.update({'tasks': fireStore.FieldValue.arrayUnion(new_item)});
         this.props.checklist.tasks.push(new_item); // Add it to front end too
-        this.setState({goItemScreenKey : new_item.key}); // Make it navigate to edit screen of this new item. 
+        this.setState({goTaskScreenKey : this.props.checklist.tasks.length - 1}); // Make it navigate to edit screen of this new item. 
     }
 
     render() {
@@ -151,8 +151,8 @@ class TasksList extends React.Component {
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
         }
-        if (this.state.goItemScreenKey != -1) {
-            return <Redirect to={'/checklist/' + this.props.checklist.id + '/' + this.state.goItemScreenKey} />;
+        if (this.state.goTaskScreenKey != -1) {
+            return <Redirect to={'/checklist/' + this.props.checklist.id + '/' + this.state.goTaskScreenKey} />;
         }
         const checklist = this.props.checklist ? this.props.checklist : null;
         const tasks = this.props.checklist ? checklist.tasks : [];
