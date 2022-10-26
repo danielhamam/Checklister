@@ -154,9 +154,9 @@ class ItemScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps.match.params;
-    const { todoLists } = state.firestore.data;
-    const todoList = todoLists ? todoLists[id] : null;
-    todoList.id = id;
+    // const { todoLists } = state.firestore.data;
+    // const todoList = todoLists ? todoLists[id] : null;
+    // todoList.id = id;
   
     return {
       todoList,

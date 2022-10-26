@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import ItemsList from './ItemsList.js'
+import TasksList from './TasksList.js'
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 
@@ -78,7 +78,7 @@ class ListScreen extends Component {
             <div className='dashboard'> 
                 <div className="container white">
                     <div class="modal_trigger" href="my_modal" id="list_trash" onClick={this.onModal}> &#128465; </div>
-                    <h5 className="grey-text text-darken-3" id="todolist_header">Todo List</h5>
+                    <h5 className="grey-text text-darken-3" id="todolist_header">Checklist</h5>
                     <div class="test_class">    Test-Class  </div>
                     <div className="input-field">
                         <label className="active" htmlFor="email">Name:</label>
@@ -99,9 +99,7 @@ class ListScreen extends Component {
                             <button id="no" onClick={this.toggleModal} class="modal-close waves-effect waves-white btn-flat">No</button>
                             <div id="last_line"> This list will not be retrievable.</div>
                     </div>
-
-                    {/* <ItemsList checklist={this.props.checklist} /> */}
-
+                    <TasksList checklist={checklist} />
                 </div>
             </div>
         );
