@@ -73,25 +73,22 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   background-color: lightgreen;
 }
 
-.list_item_task_header {
-  position: relative;
-  top: 10px;
-  left: 4%;
+.task_title {
+  /* top: 10px; */
   cursor : pointer;
+  font-weight: bold;
+  font-size: 33pt;
+  text-align: center;
 }
 
-.list_item_due_date_header {
-  position: relative;
-  top: 10px;
-  left: 21%;
-  cursor : pointer;
+.title_task {
 }
 
-.list_item_status_header {
-  position: relative;
-  top: 10px;
-  left: 32%;
-  cursor : pointer;
+.title_due_date {
+}
+
+.title_status {
+  /* margin-left: 6%; */
 }
 
 #list_trash {
@@ -220,25 +217,6 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   font-weight: bold;
   font-size: 12pt;
   color: black;
-}
-
-.list_item_task_header {
-  position: relative;
-  font-weight: bold;
-  font-size: 36pt;
-  left: 5%;
-}
-
-.list_item_due_date_header {
-  font-weight: bold;
-  font-size: 33pt;
-  padding-right: 3%;
-}
-
-.list_item_status_header {
-  font-weight: bold;
-  font-size: 33pt;
-  left: 195px;
 }
 
 #list_trash {
