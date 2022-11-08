@@ -14,7 +14,7 @@ export const constants = {
           {
             isOldItem : false,
             assigned_to : 'Unknown',
-            complete : false,
+            completed : false,
             description : 'Unknown',
             due_date : '0000-00-00',
             key : Math.floor(Math.random() * 1000) + 100

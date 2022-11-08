@@ -16,7 +16,7 @@
                         {
                         "isOldItem" : false,
                         "assigned_to" : "John Doe",
-                        "complete" : false,
+                        "completed" : false,
                         "description" : "Write down thoughts for the day",
                         "due_date" : "2022-11-25",
                         "key" : "500"
@@ -32,7 +32,7 @@
                         {
                         "isOldItem" : false,
                         "assigned_to" : "Joe Flow",
-                        "complete" : false,
+                        "completed" : false,
                         "description" : "Submit computer science homework assignment",
                         "due_date" : "2022-12-31",
                         "key" : "505"
@@ -55,7 +55,7 @@
                     {
                       "isOldItem" : false,
                       "assigned_to" : "John Snow",
-                      "complete" : false,
+                      "completed" : false,
                       "description" : "Finish laundry by end of day today",
                       "due_date" : "2022-10-02",
                       "key" : "192"

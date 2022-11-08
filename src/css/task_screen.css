@@ -1,0 +1,60 @@
+/* ITEM SCREEN CONTROLS */
+#item_heading {}
+#item_description_prompt {}
+#item_description_textfield {}
+#item_assigned_to_prompt {}
+#item_assigned_to_textfield {}
+#item_due_date_prompt {}
+#item_completed_prompt {}
+#item_completed_checkbox {}
+#item_form_submit_button {}
+#item_form_cancel_button {}
+#item_due_date_picker {
+  margin : 5px 8px 0px 0px;
+  width: 99.5%;
+  height: 25px;
+  background : white;
+  border: solid;
+  border-width: 1px;
+}
+#item_completed_prompt {}
+#item_form_container {
+    display: grid;
+    grid-template-columns: 10fr 40fr;
+    /* width: 900px; */
+}
+#item_completed_checkbox {
+  opacity : 1;
+  position : relative;
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 5px;
+}
+.item_form_buttons_container {
+   display: flex;
+   justify-content: space-evenly;
+   width: 100%;
+   text-align: center;
+}
+#item_form_button {
+    height: 50px;
+    width: 200px;
+    cursor: pointer;
+  }
+  #item_form_cancel_button {}
+
+/* ITEM SCREEN CONTROLS */
+#item_heading {}
+#item_description_prompt {}
+#item_description_textfield {
+  border: solid;
+  border-width: 1px;
+}
+#item_assigned_to_prompt {}
+#item_assigned_to_textfield {
+  border: solid;
+  border-width: 1px;
+}

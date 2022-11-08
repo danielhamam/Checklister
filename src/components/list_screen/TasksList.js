@@ -164,14 +164,13 @@ class TasksList extends React.Component {
                     <span className="task_title title_task col s2" onClick= {this.sortTask}> <span style={{paddingLeft: '15px'}}> Task </span> </span>
                     <span className="task_title title_due_date offset-m1 col s4" onClick= {this.sortDueDate}> <span style={{paddingLeft: '50px'}}> Due Date</span> </span>
                     <span className="task_title title_status col m1" onClick= {this.sortStatus}> <span style={{paddingLeft: '30px'}}> Status </span> </span>
-            </div>
-                              
-                {tasks && tasks.map((task,index) => (
-                        <Link to={'/checklist/' + checklist.id + '/' + index} key={task.key} task={task}>
-                            <TaskCard checklist={checklist} task={task} />
-                        </Link>
-                )
-                    )
+            </div>             
+                {
+                    tasks && tasks.map((task,index) => (
+                            <Link to={'/checklist/' + checklist.id + '/' + index} key={task.key} task={task}>
+                                <TaskCard checklist={checklist} task={task} />
+                            </Link>
+                    ))
                 }
                     <div id="add_item" > 
                         <i class="material-icons large" onClick={this.addTask}> add_circle_outline</i>

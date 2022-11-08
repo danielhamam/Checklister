@@ -5,6 +5,7 @@ import { getFirestore } from 'redux-firestore';
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+import { firestore } from 'firebase';
 
 class AdminScreen extends React.Component {
     state = {
@@ -29,12 +30,14 @@ class AdminScreen extends React.Component {
     handleClear = () => {
         const fireStore = getFirestore();
         fireStore.collection('accounts').get()
-            .then((accounts) => {
-                accounts.forEach((account) => {
-                    account.collection('checklists').get()
-                        .then((checklists) => {
-                            checklists.forEach((checklistDoc) => {
-                                fireStore.collection('accounts').doc(account.id).collection('checklists').doc(checklistDoc.id).delete();
+            .then((querySnapshot) => {
+                querySnapshot.forEach((account) => {
+                    console.log('account: ', account);
+                    fireStore.collection('accounts').doc(account.id).collection('checklists').get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((checklist) => {
+                                console.log('deleting checklist: ', checklist.data());
+                                fireStore.collection('accounts').doc(account.id).collection('checklists').doc(checklist.id).delete();
                             })
                         })
                 });
