@@ -172,10 +172,7 @@ checkColor = () => {
             </Button>
 
             {/* {this.checkColor()} */}
-
             </div>
-
-            
         );
                 }
 }

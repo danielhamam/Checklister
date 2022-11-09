@@ -44,7 +44,8 @@ class ListScreen extends Component {
 
     deleteList = () => {
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').doc(this.props.checklist.id).delete();
+        const checklist = this.props.checklist ? this.props.checklist[0] : null;
+        fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).delete();
         this.toggleModal();
         this.setState({ NavigateHome : true});
    }
