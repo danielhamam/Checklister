@@ -1,0 +1,55 @@
+/* List Screen */
+
+#item_button1 {
+    display: inline-block;
+    left:40px;
+    width: 35px;
+    height: 35px;
+    background-color : red;
+    /* font-size: 10pt; */
+  }
+  
+.item_button2 {
+    display: inline-block;
+    left: 30px;
+    width: 35px;
+    height: 35px;
+    background-color : purple;
+    /* font-size: 10pt; */
+}
+
+.item_button3 {
+    display: inline-block;
+    left: 20px;
+    width: 35px;
+    height: 35px;
+    background-color : blue;
+    /* font-size: 10pt; */
+}
+
+.disabled {
+    background-color: lightgray;
+    pointer-events: none
+}
+
+#floating_button {
+    position: relative;
+    margin: auto;
+    /* float: right;  */
+    /* right: 10px; */
+    cursor: pointer;
+    padding-top: 0 !important;
+}
+
+#add_item {
+    position : relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* On Hovers */
+
+#add_item_icon:hover, #floating_button:hover {
+    opacity: var(--standard-onhover);
+}
+

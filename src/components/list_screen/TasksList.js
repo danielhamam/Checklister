@@ -173,7 +173,7 @@ class TasksList extends React.Component {
                     ))
                 }
                     <div id="add_item" > 
-                        <i className="material-icons large" onClick={this.addTask}> add_circle_outline</i>
+                        <i id="add_item_icon" className="material-icons large" onClick={this.addTask}> add_circle_outline</i>
                     </div>
             </div>
         );

@@ -153,7 +153,7 @@ checkColor = () => {
                         <span className='due_date col s4' >{task.due_date} </span>
                         <span className={'completed ' + style_card + ' col s3'}> {completedValue} </span>   
                     </div>
-                    <Button id="floating_button" floating fab={{direction: 'left'}} className="green" large >
+                    <Button id="floating_button" floating fab={{direction: 'right'}} className="green" large >
                         <Button floating id="item_button1">
                             <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
                         </Button>
