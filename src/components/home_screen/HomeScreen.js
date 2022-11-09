@@ -33,11 +33,10 @@ class HomeScreen extends Component {
         const fireStore = getFirestore();
         let baseURI = event.target.baseURI;
         let TARGET_ID = baseURI.split('/').pop();
-        
-        let reference = fireStore.collection("todoLists").doc(TARGET_ID);
-        reference.update({
-            created_time: new Date()
-        })
+        console.log('moving ' + TARGET_ID + ' to the top');
+        fireStore.collection("accounts").doc(this.props.auth.uid).collection("checklists").doc(TARGET_ID).update({
+            created_time: new Date().toLocaleString()
+        });
     }
 
     render() {
