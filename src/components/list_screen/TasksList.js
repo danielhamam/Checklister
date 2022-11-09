@@ -162,8 +162,8 @@ class TasksList extends React.Component {
             <div className="checklists">
             <div className="header_container section row">
                     <span className="task_title title_task col s2" onClick= {this.sortTask}> <span style={{paddingLeft: '15px'}}> Task </span> </span>
-                    <span className="task_title title_due_date offset-m1 col s4" onClick= {this.sortDueDate}> <span style={{paddingLeft: '50px'}}> Due Date</span> </span>
-                    <span className="task_title title_status col m1" onClick= {this.sortStatus}> <span style={{paddingLeft: '30px'}}> Status </span> </span>
+                    <span className="task_title title_due_date offset-m1 col s4" onClick= {this.sortDueDate}> <span style={{paddingRight: '60px'}}> Due Date</span> </span>
+                    <span className="task_title title_status col s3" onClick= {this.sortStatus}> <span style={{paddingRight: '40px'}}> Status </span> </span>
             </div>             
                 {
                     tasks && tasks.map((task,index) => (
