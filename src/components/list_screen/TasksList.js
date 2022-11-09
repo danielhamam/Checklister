@@ -168,7 +168,7 @@ class TasksList extends React.Component {
                 {
                     tasks && tasks.map((task,index) => (
                             <Link to={'/checklist/' + checklist.id + '/' + index} key={task.key} task={task}>
-                                <TaskCard checklist={checklist} task={task} />
+                                <TaskCard checklist={checklist} task={task} authUid={this.props.auth.uid}/>
                             </Link>
                     ))
                 }

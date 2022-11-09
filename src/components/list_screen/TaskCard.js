@@ -6,121 +6,37 @@ import Icon from '@material-ui/core/Icon';
 import { Redirect } from 'react-router-dom'
 
 class TaskCard extends React.Component {
+    state = { goList : false, }
 
-    state = {
-        goList : false,
+    processMovePos = (event, direction) => {
+        event.preventDefault();
+        const fireStore = getFirestore();
+        let targetIndex = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
+        let otherTargetIndex = direction !== 'down' ? targetIndex - 1 : targetIndex + 1; 
+        this.props.checklist.tasks[targetIndex] = this.props.checklist.tasks.splice(otherTargetIndex, 1, this.props.checklist.tasks[targetIndex])[0];
+        fireStore.collection("accounts").doc(this.props.authUid).collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
     }
 
-processMoveUp = (e) => {
-    // "description": "Give You Up",
-    // "due_date": "2019-09-30",
-    // "assigned_to": "Rick",
-    // "completed": true,
-    //  "key": 0
-    e.preventDefault();
-    let original_key = this.props.task.key;
-
-    let first_index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(original_key);
-    let second_index = first_index - 1; // Above
-
-    // First item:
-    let first_task = {
-        description: this.props.checklist.tasks[first_index].description,
-        due_date: this.props.checklist.tasks[first_index].due_date,
-        assigned_to: this.props.checklist.tasks[first_index].assigned_to,
-        completed: this.props.checklist.tasks[first_index].completed,
-        key : original_key
+    processDelete = (e) => {
+        e.preventDefault();
+        const fireStore = getFirestore();
+        let targetIndex = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
+        this.props.checklist.tasks.splice(targetIndex, 1);
+        fireStore.collection("accounts").doc(this.props.authUid).collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
+        this.setState({goList : true});
     }
 
-    // Second task:
-    let second_task = {
-        description: this.props.checklist.tasks[second_index].description,
-        due_date: this.props.checklist.tasks[second_index].due_date,
-        assigned_to: this.props.checklist.tasks[second_index].assigned_to,
-        completed: this.props.checklist.tasks[second_index].completed,
-        key : this.props.checklist.tasks[second_index].key
-    }
+    checkColor = () => {
 
-    // Swap 
-
-    this.props.checklist.tasks.splice(first_index, 1);
-    this.props.checklist.tasks.splice(second_index, 1);
-
-    this.props.checklist.tasks.splice(second_index, 0, first_task);
-    this.props.checklist.tasks.splice(first_index, 0, second_task);
-
-    const fireStore = getFirestore();
-    fireStore.collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
-}
-
-processMoveDown = (e) => {
-
-    e.preventDefault();
-    let original_key = this.props.task.key;
-
-    let first_index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(original_key);
-    let second_index = first_index + 1; // Below
-
-    // First task:
-    let first_task = {
-        description: this.props.checklist.tasks[first_index].description,
-        due_date: this.props.checklist.tasks[first_index].due_date,
-        assigned_to: this.props.checklist.tasks[first_index].assigned_to,
-        completed: this.props.checklist.tasks[first_index].completed,
-        key : original_key
-    }
-
-    // Second task:
-    let second_task = {
-        description: this.props.checklist.tasks[second_index].description,
-        due_date: this.props.checklist.tasks[second_index].due_date,
-        assigned_to: this.props.checklist.tasks[second_index].assigned_to,
-        completed: this.props.checklist.tasks[second_index].completed,
-        key : this.props.checklist.tasks[second_index].key
-    }
-
-    // Swap 
-
-    this.props.checklist.tasks.splice(second_index, 1);
-    this.props.checklist.tasks.splice(first_index, 1);
-
-    this.props.checklist.tasks.splice(first_index, 0, second_task);
-    this.props.checklist.tasks.splice(second_index, 0, first_task);
-
-    const fireStore = getFirestore();
-    fireStore.collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
-
-}
-
-processDelete = (e) => {
-
-    e.preventDefault();
-
-    const fireStore = getFirestore();
-    // let reference = fireStore.collection('checklists').doc(this.props.checklist.id);
-
-    let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
-
-    this.props.checklist.tasks.splice(index, 1);
-    fireStore.collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
-
-    this.setState({goList : true});
-
-    }
-
-checkColor = () => {
-
-    let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
-    if (index === this.props.checklist.tasks.length - 1) {
-        document.getElementById("item_button2").style.backgroundColor = "gray";
+        let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
+        if (index === this.props.checklist.tasks.length - 1) {
+            document.getElementById("item_button2").style.backgroundColor = "gray";
+            }
         }
-    }
 
     render() {
         
-        if (this.state.goList) {
-            return <Redirect to={"/checklist/" + this.props.checklist.id} />
-        }
+        if (this.state.goList) return <Redirect to={"/checklist/" + this.props.checklist.id} />
 
         const { task } = this.props;  
         let { completedValue } = "";
@@ -135,14 +51,13 @@ checkColor = () => {
             style_card = "style_red";
         }
 
-        let moveUpClass = "item_button3";
-        let moveDownClass = "item_button2";
+        let moveUpClass = "item_button_up";
+        let moveDownClass = "item_button_down";
         let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
         if (index === 0)
             moveUpClass += " disabled";
         if (index === (this.props.checklist.tasks.length - 1))
             moveDownClass += " disabled";
-
 
         return (
             <div className="white card todo-list-link pink-lighten-3">
@@ -151,18 +66,17 @@ checkColor = () => {
                         <span className='description col s12' >{task.description} </span>
                         <span className='assigned_to col s4'> Assigned to: {task.assigned_to}</span>
                         <span className='due_date col s4' >{task.due_date} </span>
-                        <span className={'completed ' + style_card + ' col s3'}> {completedValue} </span>   
+                        <span className={'completed ' + style_card + ' col s1'}> {completedValue} </span>   
                     </div>
-                    <Button id="floating_button" floating fab={{direction: 'right'}} className="green" large >
-                        <Button floating id="item_button1">
-                            <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
-                        </Button>
-                        <Button floating className={moveDownClass} >
-                            <Icon fontSize="large" onClick={this.processMoveDown}>arrow_downward</Icon>
-                        </Button>
-                        <Button floating className={moveUpClass} >
-                            <Icon fontSize="large" onClick={this.processMoveUp}>arrow_upward</Icon>
-                        </Button>
+                    <Button id="floating_button" floating fab={{direction: 'left'}} className="green" large > </Button>
+                    <Button floating className="item_button item_button_delete">
+                        <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
+                    </Button>
+                    <Button floating className={"item_button " + moveDownClass} >
+                        <Icon fontSize="large" onClick={(e) => this.processMovePos(e, 'down')}>arrow_downward</Icon>
+                    </Button>
+                    <Button floating className={"item_button " + moveUpClass} >
+                        <Icon fontSize="large" onClick={(e) => this.processMovePos(e, 'up')}>arrow_upward</Icon>
                     </Button>
                 </div>
             </div>
