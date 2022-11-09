@@ -11,33 +11,21 @@ class ListScreen extends Component {
     state = {
         // name: this.props.checklist.name,
         // owner: this.props.checklist.owner,
-        name: '',
-        owner: '',
+        // name: '',
+        // owner: '',
         NavigateHome: false, 
         rerender : false,
     }
 
-    handleNameChange = (event) => {
-
-        getFirestore().collection('todoLists').doc(this.props.checklist.id).update({
-            name: event.target.value,
-         });
-
-        this.setState({ name: event.target.value});
-
-    }
-    handleOwnerChange = (event) => {
-
-        getFirestore().collection('todoLists').doc(this.props.checklist.id).update({
-            owner: event.target.value,
-         });
-
-        this.setState({ owner: event.target.value});
+    handleListChange = (event, property) => {
+        const checklist = this.props.checklist ? this.props.checklist[0] : null;
+        let propertyVal = event.target.value;
+        checklist[property] = propertyVal;
     }
 
     toggleModal = () => {
         let result = document.getElementById("my_modal");
-        if (result.style.display == "block") {
+        if (result.style.display === "block") {
             document.getElementById("my_modal").style.animation = "fadeout .6s";
             result.style.visibility = "hidden";
         } else {
@@ -48,7 +36,6 @@ class ListScreen extends Component {
     }
 
     onModal = (e) => {
-
         let result = document.getElementById("my_modal");
         result.style.visibility = "visible";
         document.getElementById("my_modal").style.animation = "fadein .6s";
@@ -56,47 +43,57 @@ class ListScreen extends Component {
     }
 
     deleteList = () => {
-
         const fireStore = getFirestore();
         fireStore.collection('todoLists').doc(this.props.checklist.id).delete();
         this.toggleModal();
         this.setState({ NavigateHome : true});
    }
 
+   componentWillUnmount = () => {
+    console.log('ListScreen.componentWillUnmount : saving checklist name / owner');
+    const fireStore = getFirestore();
+    const checklist = this.props.checklist ? this.props.checklist[0] : null;
+    if (checklist) fireStore.collection('accounts').doc(this.props.auth.uid)
+                    .collection('checklists').doc(checklist.id).update({ 
+                        'name' : checklist.name,
+                        'owner' : checklist.owner
+                    });
+   }
+
     render() {
         const auth = this.props.auth;
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
 
-        console.log('---------------PROPS:', this.props);
+        // console.log('---------------PROPS:', this.props);
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
-        if (this.state.NavigateHome == true) {
+        if (this.state.NavigateHome === true) {
             return <Redirect to="/" />;
         }
         return (
             <div className='dashboard'> 
                 <div className="container white">
-                    <div class="modal_trigger" href="my_modal" id="list_trash" onClick={this.onModal}> &#128465; </div>
+                    <div className="modal_trigger" href="my_modal" id="list_trash" onClick={this.onModal}> &#128465; </div>
                     <h5 className="grey-text text-darken-3" id="todolist_header">Checklist</h5>
-                    <div class="test_class">    Test-Class  </div>
+                    <div className="test_class">    Test-Class  </div>
                     <div className="input-field">
                         <label className="active" htmlFor="email">Name:</label>
-                        <input className="active" type="text" name="name" id="name" onChange={this.handleNameChange} defaultValue={checklist ? checklist.name : ''} />
+                        <input className="active" type="text" name="name" id="name" onChange={(e) => this.handleListChange(e, 'name')} defaultValue={checklist ? checklist.name : ''} />
                     </div>
                     <div className="input-field">
                         <label className="active" htmlFor="password">Owner:</label>
-                        <input className="active" type="text" name="owner" id="owner" onChange={this.handleOwnerChange} defaultValue={checklist ? checklist.owner : ''} />
+                        <input className="active" type="text" name="owner" id="owner" onChange={(e) => this.handleListChange(e, 'owner')} defaultValue={checklist ? checklist.owner : ''} />
                     </div>
 
-                    <div id="my_modal" class="modal">
-                        <div class="modal-content ">
+                    <div id="my_modal" className="modal">
+                        <div className="modal-content ">
                             <h4>Delete list?</h4>
                             <br />
                             <p> Are you sure you want to delete this list?</p>
                         </div>
-                            <button id="yes" onClick={this.deleteList} class="modal-close waves-effect waves-white btn-flat">Yes</button>
-                            <button id="no" onClick={this.toggleModal} class="modal-close waves-effect waves-white btn-flat">No</button>
+                            <button id="yes" onClick={this.deleteList} className="modal-close waves-effect waves-white btn-flat">Yes</button>
+                            <button id="no" onClick={this.toggleModal} className="modal-close waves-effect waves-white btn-flat">No</button>
                             <div id="last_line"> This list will not be retrievable.</div>
                     </div>
                     <TasksList checklist={checklist} />
@@ -116,7 +113,7 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect(props => {
-    console.log('---------------PROPS:', props);
+    // console.log('---------------PROPS:', props);
     return [
         { 
         collection: 'accounts',

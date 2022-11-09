@@ -43,7 +43,7 @@ class HomeScreen extends Component {
     render() {
 
         if (this.state.isNewItem) {
-           return <Redirect to={'/todoList/' + this.state.list_index} />;
+           return <Redirect to={'/checklist/' + this.state.list_index} />;
         }
 
         if (!this.props.auth.uid) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { firestoreConnect } from 'react-redux-firebase';
+// import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 import {Button} from 'react-materialize';
 import Icon from '@material-ui/core/Icon';
@@ -97,7 +97,7 @@ processDelete = (e) => {
     e.preventDefault();
 
     const fireStore = getFirestore();
-    let reference = fireStore.collection('checklists').doc(this.props.checklist.id);
+    // let reference = fireStore.collection('checklists').doc(this.props.checklist.id);
 
     let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
 
@@ -111,7 +111,7 @@ processDelete = (e) => {
 checkColor = () => {
 
     let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
-    if (index == this.props.checklist.tasks.length - 1) {
+    if (index === this.props.checklist.tasks.length - 1) {
         document.getElementById("item_button2").style.backgroundColor = "gray";
         }
     }
@@ -126,7 +126,7 @@ checkColor = () => {
         let { completedValue } = "";
         let { style_card } = "";
         
-        if (task.completed == true) {
+        if (task.completed === true) {
             completedValue = "Completed";
             style_card = "style_green";
         }
@@ -146,15 +146,15 @@ checkColor = () => {
 
         return (
 
-            <div class="white card todo-list-link pink-lighten-3">
+            <div className="white card todo-list-link pink-lighten-3">
 
-            <div class="row">
+            <div className="row">
 
                 <div className="card-content grey-text text-darken-3">
-                    <span class="col s12" id="description" >{task.description} </span>
-                    <span class="col s3" id="assigned_to"> Assigned to: {task.assigned_to}</span>
+                    <span className="col s12" id="description" >{task.description} </span>
+                    <span className="col s3" id="assigned_to"> Assigned to: {task.assigned_to}</span>
                     <span id="due_date" >{task.due_date} </span>
-                    <span id="completed" class = {style_card}> {completedValue} </span>   
+                    <span id="completed" className={style_card}> {completedValue} </span>   
                 </div>
                  
             </div>

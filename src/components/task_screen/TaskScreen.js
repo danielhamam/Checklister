@@ -13,22 +13,12 @@ class TaskScreen extends Component {
         // task : this.props.checklist && this.props.checklist.tasks ? this.props.checklist.tasks[this.props.match.params.key] : null
     }
 
-    goListScreen = () => {
-        this.setState({goList : true});
-    }
+    goListScreen = () => { this.setState({goList : true}); }
 
     handlePropertyChange = (e, property) => {
         const propertyVal = e.target.value;
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        if (checklist) {
-            checklist.tasks[this.props.match.params.key][property] = propertyVal
-        }
-        // this.setState(prevState => ({
-        //     checklist: {    
-        //         ...prevState.checklist,
-        //         [property] : propertyVal
-        //     }
-        // })
+        if (checklist) checklist.tasks[this.props.match.params.key][property] = propertyVal
     }
 
     processCancelChanges = () => { this.setState({goList : true}); }
@@ -36,9 +26,7 @@ class TaskScreen extends Component {
     processSubmitChanges = () => {
         const fireStore = getFirestore();
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        if (checklist) {
-            fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).update({ tasks: checklist.tasks});
-        }
+        if (checklist) fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).update({ tasks: checklist.tasks});
         this.setState({goList : true});
     }
 
@@ -48,7 +36,7 @@ class TaskScreen extends Component {
 
         // const list_id = this.props.todoList.id;
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        const task = checklist ? checklist.tasks[this.props.match.params.key]: null;
+        const task = checklist ? checklist.tasks[this.props.match.params.key] : null;
 
         if (this.state.goList && checklist) {
             return <Redirect to={"/checklist/" + this.props.match.params.id} />
@@ -87,7 +75,7 @@ class TaskScreen extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const { id } = ownProps.match.params;
+    // const { id } = ownProps.match.params;
     return {
       auth: state.firebase.auth,
       checklist: state.firestore.ordered.checklist

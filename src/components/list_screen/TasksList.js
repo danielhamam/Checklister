@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import TaskCard from './TaskCard';
-import { firestoreConnect } from 'react-redux-firebase';
+// import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 
 class TasksList extends React.Component {
@@ -151,7 +151,7 @@ class TasksList extends React.Component {
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
         }
-        if (this.state.goTaskScreenKey != -1) {
+        if (this.state.goTaskScreenKey !== -1) {
             return <Redirect to={'/checklist/' + this.props.checklist.id + '/' + this.state.goTaskScreenKey} />;
         }
         const checklist = this.props.checklist ? this.props.checklist : null;
@@ -173,7 +173,7 @@ class TasksList extends React.Component {
                     ))
                 }
                     <div id="add_item" > 
-                        <i class="material-icons large" onClick={this.addTask}> add_circle_outline</i>
+                        <i className="material-icons large" onClick={this.addTask}> add_circle_outline</i>
                     </div>
             </div>
         );

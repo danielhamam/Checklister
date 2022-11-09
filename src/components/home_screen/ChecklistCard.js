@@ -16,7 +16,7 @@ class ChecklistCard extends React.Component {
 
     render() {
         const { checklist } = this.props;
-        console.log("ChecklistCard.render -> checklist.id: " + checklist.id);
+        // console.log("ChecklistCard.render -> checklist.id: " + checklist.id);
         return (
             <div className="todo_card card todo-list-link indigo lighten-5">
                 <div className="card-content grey-text text-darken-3">

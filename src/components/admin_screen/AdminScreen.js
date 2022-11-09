@@ -5,7 +5,7 @@ import { getFirestore } from 'redux-firestore';
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
-import { firestore } from 'firebase';
+// import { firestore } from 'firebase';
 
 class AdminScreen extends React.Component {
     state = {

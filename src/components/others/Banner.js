@@ -20,7 +20,7 @@ class Banner extends Component {
                 <br/>
                 <span style={{fontSize:'1.8vw'}}>Easy, Customizable and Fun </span>
                 {this.props.isAdministrator === true ? 
-                <button id="goAdmin" onClick={() => this.setState({adminRedirect: true})}> Go to Admin Page 🔐</button>
+                <button id="goAdmin" onClick={() => this.setState({adminRedirect: true})}> Go to Admin Page <span role="img" aria-label="lock-and-key"> 🔐 </span></button>
                 : ''}
             </p>
         </div>
