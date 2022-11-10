@@ -11,6 +11,7 @@ class LoggedInLinks extends React.Component {
   handleLogout = () => {
     const { firebase } = this.props;
     this.props.signOut(firebase);
+    window.location.href = '/login';
   }
 
   render() {

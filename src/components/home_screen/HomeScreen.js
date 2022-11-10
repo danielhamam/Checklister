@@ -45,9 +45,6 @@ class HomeScreen extends Component {
            return <Redirect to={'/checklist/' + this.state.list_index} />;
         }
 
-        if (!this.props.auth.uid) {
-            return <Redirect to="/login" />;
-        }
         return (
             
             <div className="dashboard">
@@ -97,7 +94,11 @@ export default compose(
             { 
             collection: 'accounts',
             doc: props.auth.uid,
-            subcollections: [{collection : 'checklists'}], orderBy: ['created_time', 'desc'],
+            subcollections: [
+                {
+                    collection : 'checklists', 
+                }
+            ],
             storeAs: 'checklists' // abstracts data in redux store
             },
         ]
