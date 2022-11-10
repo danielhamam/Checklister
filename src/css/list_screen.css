@@ -1,25 +1,23 @@
 /* List Screen */
 
-.item_button {
-    display: inline-block;
-    width: 35px;
-    height: 35px;
+.task_dashboard {
+    padding-bottom: 15px;
+}
+.task_dashboard:hover {
+    opacity: var(--standard-onhover);
 }
 
 .item_button_delete {
-    left:40px;
     background-color : red;
     /* font-size: 10pt; */
   }
   
 .item_button_down {
-    left: 30px;
     background-color : purple;
     /* font-size: 10pt; */
 }
 
 .item_button_up {
-    left: 20px;
     background-color : blue;
     /* font-size: 10pt; */
 }
@@ -29,14 +27,38 @@
     pointer-events: none
 }
 
-#floating_button {
-    position: relative;
-    margin: auto;
-    /* float: right;  */
-    /* right: 10px; */
-    cursor: pointer;
-    padding-top: 0 !important;
+.task_contents {
+    display: inline !important;
 }
+
+.action_buttons_wrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    bottom: 11px;
+    margin-left: auto;
+    /* margin-right: 1px; */
+    /* padding-bottom: 5px; */
+}
+
+.space_between_buttons {
+    margin: 3px;
+}
+
+.action_buttons {
+    float: right;
+}
+
+.floating_action_button {
+    width: 35px;
+    height: 35px;
+}
+
+/* .floating_action_buttons {
+    position: absolute;
+    width: 200px;
+    margin-left: 70px;
+} */
 
 #add_item {
     position : relative;

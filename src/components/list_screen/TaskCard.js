@@ -27,57 +27,44 @@ class TaskCard extends React.Component {
     }
 
     checkColor = () => {
-
         let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
         if (index === this.props.checklist.tasks.length - 1) {
             document.getElementById("item_button2").style.backgroundColor = "gray";
-            }
         }
+    }
 
     render() {
-        
         if (this.state.goList) return <Redirect to={"/checklist/" + this.props.checklist.id} />
-
         const { task } = this.props;  
-        let { completedValue } = "";
-        let { style_card } = "";
-        
-        if (task.completed === true) {
-            completedValue = "Completed";
-            style_card = "style_green";
-        }
-        else {
-            completedValue = "Pending";
-            style_card = "style_red";
-        }
-
-        let moveUpClass = "item_button_up";
-        let moveDownClass = "item_button_down";
         let index = this.props.checklist.tasks.map(function (task) {return task.key;}).indexOf(this.props.task.key);
-        if (index === 0)
-            moveUpClass += " disabled";
-        if (index === (this.props.checklist.tasks.length - 1))
-            moveDownClass += " disabled";
-
+        let moveUpClass = "item_button_up" + (index === 0 ? " disabled" : "");
+        let moveDownClass = "item_button_down" + (index === (this.props.checklist.tasks.length - 1) ? " disabled" : "");;
         return (
-            <div className="white card todo-list-link pink-lighten-3">
-                <div className="row">
+            <div className="task_dashboard white card todo-list-link pink-lighten-3">
+                <div className="task_contents row">
                     <div className="card-content grey-text text-darken-3">
                         <span className='description col s12' >{task.description} </span>
                         <span className='assigned_to col s4'> Assigned to: {task.assigned_to}</span>
                         <span className='due_date col s4' >{task.due_date} </span>
-                        <span className={'completed ' + style_card + ' col s1'}> {completedValue} </span>   
+                        <span className={'completed ' + (task.completed ? "style_green" : "style_red") + ' col s1'}> {task.completed ? "Completed" : "Pending"} </span>   
+                        <div className="action_buttons_wrapper col s3"> 
+                            <div className="action_buttons"> 
+                                <span className='space_between_buttons'> </span>
+                                <Button floating className={"floating_action_button " + moveUpClass} >
+                                    <Icon fontSize="large" onClick={(e) => this.processMovePos(e, 'up')}>arrow_upward</Icon>
+                                </Button>
+                                <span className='space_between_buttons'> </span>
+                                <Button floating className={"floating_action_button " + moveDownClass} >
+                                    <Icon fontSize="large" onClick={(e) => this.processMovePos(e, 'down')}>arrow_downward</Icon>
+                                </Button>
+                                <span className='space_between_buttons'> </span>
+                                <Button floating className="floating_action_button item_button_delete">
+                                    <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
+                                </Button>
+                                <span className='space_between_buttons'> </span>
+                            </div>
+                        </div>
                     </div>
-                    <Button id="floating_button" floating fab={{direction: 'left'}} className="green" large > </Button>
-                    <Button floating className="item_button item_button_delete">
-                        <Icon fontSize="large" onClick={this.processDelete}>close</Icon>
-                    </Button>
-                    <Button floating className={"item_button " + moveDownClass} >
-                        <Icon fontSize="large" onClick={(e) => this.processMovePos(e, 'down')}>arrow_downward</Icon>
-                    </Button>
-                    <Button floating className={"item_button " + moveUpClass} >
-                        <Icon fontSize="large" onClick={(e) => this.processMovePos(e, 'up')}>arrow_upward</Icon>
-                    </Button>
                 </div>
             </div>
         );
