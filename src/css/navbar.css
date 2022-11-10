@@ -7,3 +7,7 @@
     /* background-image: var(--standard-color-gradient); */
     background-color: var(--counter-color);
 }
+
+.brand-logo:hover {
+    opacity: var(--standard-onhover);
+}

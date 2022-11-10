@@ -35,3 +35,7 @@
     opacity: var(--standard-onhover);
     cursor: pointer;
 }
+
+#list_trash:hover {
+    opacity: var(--standard-onhover);
+}

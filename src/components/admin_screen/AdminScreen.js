@@ -44,6 +44,24 @@ class AdminScreen extends React.Component {
         })
     }
 
+    /*
+    * Clears all checklists in all accounts 
+    */
+    clearAllChecklists = () => {
+        console.log('AdminScreen.clearAllChecklists: clearing all checklists part of every account......');
+        const fireStore = getFirestore();
+        fireStore.collection('accounts').get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((account) => {
+                    fireStore.collection('accounts').doc(account.id).collection('checklists').get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((checklist) => {
+                                fireStore.collection('accounts').doc(account.id).collection('checklists').doc(checklist.id).delete();
+                        })
+                    })
+                })
+            })
+    }
     
     handleReset = () => {
         this.handleClear(); // clears database
@@ -110,8 +128,10 @@ class AdminScreen extends React.Component {
             <div id="admin_wrapper">
                 <div id="admin_options">
                   <button id="return_home" className="handle_button" onClick={this.goHome}> Return Home </button>
-                  <button id="reset_database" className="handle_button" onClick={this.handleReset}>Reset to Sample Database</button>
-                  <button id="clear_database" className="handle_button" onClick={this.handleClear}>Clear Database</button>
+                  <button id="clear_checklists" className="handle_button" onClick={this.clearAllChecklists}> Clear All Checklists </button>
+                  {/* <button id="reset_database" className="handle_button" onClick={this.handleReset}>Reset to Sample Database</button> */}
+                  {/* <button id="clear_database" className="handle_button" onClick={this.handleClear}>Clear Database</button> */}
+                  {/* <button id="clear_database" className="handle_button" onClick={this.handleClear}>Clear Database</button> */}
                 </div>
                 <div id="admin_notes"> 
                     THIS PAGE IS FOR ADMINISTRATORS ONLY!
