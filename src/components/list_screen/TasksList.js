@@ -21,13 +21,12 @@ class TasksList extends React.Component {
         SORT_BY_DUE_DATE_DECREASING: "sort_by_due_date_decreasing",
         SORT_BY_STATUS_INCREASING: "sort_by_status_increasing",
         SORT_BY_STATUS_DECREASING: "sort_by_status_decreasing"
-      };
+    };
 
     sortTask = () => {
-
         if (this.state.CurrentSortingCriteria === this.ItemSortCriteria.SORT_BY_TASK_INCREASING) {
             this.setState({CurrentSortingCriteria: this.ItemSortCriteria.SORT_BY_TASK_DECREASING})
-            this.props.checklist.items.sort(function(one,two) {
+            this.props.checklist.tasks.sort(function(one,two) {
                 let first = one.description.toUpperCase();
                 let second = two.description.toUpperCase();
                 if (first < second) {
@@ -42,7 +41,7 @@ class TasksList extends React.Component {
             });
         } else {
             this.setState({CurrentSortingCriteria : this.ItemSortCriteria.SORT_BY_TASK_INCREASING}) 
-            this.props.checklist.items.sort(function(one,two) {
+            this.props.checklist.tasks.sort(function(one,two) {
                 let first = one.description.toUpperCase();
                 let second = two.description.toUpperCase();
                 if (first < second) {
@@ -55,14 +54,16 @@ class TasksList extends React.Component {
                     return 0;
                 }
                 }
-            )}
+            )
+        }
+        const fireStore = getFirestore();
+        fireStore.collection("accounts").doc(this.props.auth.uid).collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
     }
 
     sortDueDate = () => {
-
         if (this.state.CurrentSortingCriteria === this.ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING) {
             this.setState({CurrentSortingCriteria: this.ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING})
-            this.props.checklist.items.sort(function(one,two) {
+            this.props.checklist.tasks.sort(function(one,two) {
                 let first = one.due_date;
                 let second = two.due_date;
                 if (first < second) {
@@ -77,7 +78,7 @@ class TasksList extends React.Component {
             });
         } else {
             this.setState({CurrentSortingCriteria : this.ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING}) 
-            this.props.checklist.items.sort(function(one,two) {
+            this.props.checklist.tasks.sort(function(one,two) {
                 let first = one.due_date;
                 let second = two.due_date;
                 if (first < second) {
@@ -90,15 +91,16 @@ class TasksList extends React.Component {
                     return 0;
                 }
                 }
-            )}
-
+            )
+        }
+        const fireStore = getFirestore();
+        fireStore.collection("accounts").doc(this.props.auth.uid).collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
     }
 
     sortStatus = () => {
-
         if (this.state.CurrentSortingCriteria === this.ItemSortCriteria.SORT_BY_STATUS_INCREASING) {
             this.setState({CurrentSortingCriteria: this.ItemSortCriteria.SORT_BY_STATUS_DECREASING})
-            this.props.checklist.items.sort(function(one,two) {
+            this.props.checklist.tasks.sort(function(one,two) {
                 let first = one.completed;
                 let second = two.completed;
                 if (first < second) {
@@ -113,7 +115,7 @@ class TasksList extends React.Component {
             });
         } else {
             this.setState({CurrentSortingCriteria : this.ItemSortCriteria.SORT_BY_STATUS_INCREASING}) 
-            this.props.checklist.items.sort(function(one,two) {
+            this.props.checklist.tasks.sort(function(one,two) {
                 let first = one.completed;
                 let second = two.completed;
                 if (first < second) {
@@ -126,8 +128,10 @@ class TasksList extends React.Component {
                     return 0;
                 }
                 }
-            )}
-
+            )
+        }
+        const fireStore = getFirestore();
+        fireStore.collection("accounts").doc(this.props.auth.uid).collection("checklists").doc(this.props.checklist.id).update({ tasks: this.props.checklist.tasks});
     }
 
     addTask = () => {
@@ -162,8 +166,8 @@ class TasksList extends React.Component {
             <div className="checklists">
             <div className="header_container section row">
                     <span className="task_title title_task col s2" onClick= {this.sortTask}> <span style={{paddingLeft: '15px'}}> Task </span> </span>
-                    <span className="task_title title_due_date offset-m1 col s4" onClick= {this.sortDueDate}> <span style={{paddingRight: '60px'}}> Due Date</span> </span>
-                    <span className="task_title title_status col s3" onClick= {this.sortStatus}> <span style={{paddingRight: '40px'}}> Status </span> </span>
+                    <span className="task_title title_due_date offset-m1 col s4" onClick= {this.sortDueDate}> <span style={{paddingRight: '10px'}}> Due Date</span> </span>
+                    <span className="task_title title_status col s3" onClick= {this.sortStatus}> <span style={{paddingRight: '10px'}}> Status </span> </span>
             </div>             
                 {
                     tasks && tasks.map((task,index) => (

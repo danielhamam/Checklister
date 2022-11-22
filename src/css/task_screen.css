@@ -23,15 +23,20 @@
     grid-template-columns: 10fr 40fr;
     /* width: 900px; */
 }
+
+#item_completed_checkbox_wrapper {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 20pt !important;
+  /* color: #9e9e9e; */
+}
+
 #item_completed_checkbox {
   opacity : 1;
   position : relative;
   cursor: pointer;
   height: 15px;
   width: 15px;
-  margin-top: auto;
-  margin-bottom: auto;
-  top: 5px;
 }
 .item_form_buttons_container {
    display: flex;

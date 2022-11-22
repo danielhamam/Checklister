@@ -13,12 +13,22 @@ class TaskScreen extends Component {
         // task : this.props.checklist && this.props.checklist.tasks ? this.props.checklist.tasks[this.props.match.params.key] : null
     }
 
+    taskProperties = {
+        TASK_DESCRIPTON : "description",
+        TASK_ASSIGNED_TO : "assigned_to",
+        TASK_DUE_DATE: "due_date",
+        TASK_COMPLETED: "completed"
+    };
+
     goListScreen = () => { this.setState({goList : true}); }
 
     handlePropertyChange = (e, property) => {
-        const propertyVal = e.target.value;
+        // debugger;
+        const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        if (checklist) checklist.tasks[this.props.match.params.key][property] = propertyVal
+        if (checklist) {
+            checklist.tasks[this.props.match.params.key][property] = propertyVal
+        }
     }
 
     processCancelChanges = () => { this.setState({goList : true}); }
@@ -47,17 +57,18 @@ class TaskScreen extends Component {
                 <div id="item_form_container">
 
                     <div id="item_description_prompt" className="item_prompt">Description:</div>
-                    <input id= "item_description_textfield" onChange = {(e) => this.handlePropertyChange(e, 'description')} defaultValue = {task ? task.description : ''} className="item_input" type="input" />
+                    <input id= "item_description_textfield" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_DESCRIPTON)} defaultValue = {task ? task.description : ''} className="item_input" type="input" />
                     
                     <div id="item_assigned_to_prompt" className="item_prompt">Assigned To:</div>
-                    <input id="item_assigned_to_textfield" onChange = {(e) => this.handlePropertyChange(e, 'assigned_to')} defaultValue = {task ? task.assigned_to : ''} className="item_input" type="input" />
+                    <input id="item_assigned_to_textfield" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_ASSIGNED_TO)} defaultValue = {task ? task.assigned_to : ''} className="item_input" type="input" />
 
                     <div id= "item_due_date_prompt"  className="item_prompt">Due Date:</div>
-                    <input id="item_due_date_picker" onChange = {(e) => this.handlePropertyChange(e, 'due_date')} defaultValue = {task ? task.due_date : ''} className="item_input" type="date" />
+                    <input id="item_due_date_picker" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_DUE_DATE)} defaultValue = {task ? task.due_date : ''} className="item_input" type="date" />
 
                     <div id="item_completed_prompt" className="item_prompt">Completed:</div>
-                    <input id="item_completed_checkbox" className="form_checkbox" type="checkbox" onChange = {(e) => this.handlePropertyChange(e, 'completed')} defaultChecked= {task ? task.completed : ''} />
-                    
+                    <label id="item_completed_checkbox_wrapper">
+                        <input id="item_completed_checkbox" className="form_checkbox" type="checkbox" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_COMPLETED)} defaultChecked= {task ? task.completed : ''} />
+                    </label>
                 </div>
                 <br />
                 <div className='item_form_buttons_container'>
