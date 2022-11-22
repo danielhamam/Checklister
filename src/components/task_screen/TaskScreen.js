@@ -20,14 +20,29 @@ class TaskScreen extends Component {
         TASK_COMPLETED: "completed"
     };
 
+    newTask = {
+        isOldItem: false,
+        assigned_to: "Unknown",
+        completed: false,
+        description: "Unknown",
+        due_date: "0000-00-00",
+        key: Math.floor(Math.random() * 1000) + 100
+    }
+
     goListScreen = () => { this.setState({goList : true}); }
 
     handlePropertyChange = (e, property) => {
         // debugger;
-        const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
-        const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        if (checklist) {
-            checklist.tasks[this.props.match.params.key][property] = propertyVal
+        if (this.props.match.params.key === 'new') {
+            const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
+            this.newTask[property] = propertyVal
+        }
+        else {
+            const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
+            const checklist = this.props.checklist ? this.props.checklist[0] : null;
+            if (checklist) {
+                checklist.tasks[checklist.tasks.length - 1][property] = propertyVal
+            }
         }
     }
 
@@ -36,7 +51,10 @@ class TaskScreen extends Component {
     processSubmitChanges = () => {
         const fireStore = getFirestore();
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        if (checklist) fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).update({ tasks: checklist.tasks});
+        if (checklist) {
+            if (this.props.match.params.key === 'new') checklist.tasks.push(this.newTask);
+            fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).update({ tasks: checklist.tasks});
+        }
         this.setState({goList : true});
     }
 
@@ -44,7 +62,7 @@ class TaskScreen extends Component {
         // console.log('ItemScreen.render: this.props -> ', this.props);
         // const list_id = this.props.todoList.id;
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        const task = checklist ? checklist.tasks[this.props.match.params.key] : null;
+        const task = checklist && this.props.match.params.key !== 'new' ? checklist.tasks[this.props.match.params.key] : 'new';
 
         if (this.state.goList && checklist) {
             return <Redirect to={"/checklist/" + this.props.match.params.id} />
@@ -57,17 +75,17 @@ class TaskScreen extends Component {
                 <div id="item_form_container">
 
                     <div id="item_description_prompt" className="item_prompt">Description:</div>
-                    <input id= "item_description_textfield" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_DESCRIPTON)} defaultValue = {task ? task.description : ''} className="item_input" type="input" />
+                    <input id= "item_description_textfield" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_DESCRIPTON)} defaultValue = {task && task != 'new' ? task.description : 'Unknown'} className="item_input" type="input" />
                     
                     <div id="item_assigned_to_prompt" className="item_prompt">Assigned To:</div>
-                    <input id="item_assigned_to_textfield" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_ASSIGNED_TO)} defaultValue = {task ? task.assigned_to : ''} className="item_input" type="input" />
+                    <input id="item_assigned_to_textfield" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_ASSIGNED_TO)} defaultValue = {task && task != 'new' ? task.assigned_to : 'Unknown'} className="item_input" type="input" />
 
                     <div id= "item_due_date_prompt"  className="item_prompt">Due Date:</div>
-                    <input id="item_due_date_picker" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_DUE_DATE)} defaultValue = {task ? task.due_date : ''} className="item_input" type="date" />
+                    <input id="item_due_date_picker" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_DUE_DATE)} defaultValue = {task && task != 'new' ? task.due_date : "0000-00-00"} className="item_input" type="date" />
 
                     <div id="item_completed_prompt" className="item_prompt">Completed:</div>
                     <label id="item_completed_checkbox_wrapper">
-                        <input id="item_completed_checkbox" className="form_checkbox" type="checkbox" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_COMPLETED)} defaultChecked= {task ? task.completed : ''} />
+                        <input id="item_completed_checkbox" className="form_checkbox" type="checkbox" onChange = {(e) => this.handlePropertyChange(e, this.taskProperties.TASK_COMPLETED)} defaultChecked= {task && task != 'new' ? task.completed : false} />
                     </label>
                 </div>
                 <br />

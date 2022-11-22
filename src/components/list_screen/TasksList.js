@@ -135,19 +135,19 @@ class TasksList extends React.Component {
     }
 
     addTask = () => {
-        const fireStore = getFirestore();
-        let reference = fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(this.props.checklist.id);
-        const new_item = {
-            isOldItem: false,
-            assigned_to: "Unknown",
-            completed: false,
-            description: "Unknown",
-            due_date: "0000-00-00",
-            key: Math.floor(Math.random() * 1000) + 100
-        };
-        reference.update({'tasks': fireStore.FieldValue.arrayUnion(new_item)});
-        this.props.checklist.tasks.push(new_item); // Add it to front end too
-        this.setState({goTaskScreenKey : this.props.checklist.tasks.length - 1}); // Make it navigate to edit screen of this new item. 
+        // const fireStore = getFirestore();
+        // const new_item = {
+        //     isOldItem: false,
+        //     assigned_to: "Unknown",
+        //     completed: false,
+        //     description: "Unknown",
+        //     due_date: "0000-00-00",
+        //     key: Math.floor(Math.random() * 1000) + 100
+        // };
+        // let reference = fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(this.props.checklist.id);
+        // reference.update({'tasks': fireStore.FieldValue.arrayUnion(new_item)});
+        // this.props.checklist.tasks.push(new_item); // Add it to front end too
+        this.setState({goTaskScreenKey : 'new'}); // Make it navigate to edit screen of this new item. 
     }
 
     render() {
@@ -156,7 +156,7 @@ class TasksList extends React.Component {
             return <Redirect to="/login" />;
         }
         if (this.state.goTaskScreenKey !== -1) {
-            return <Redirect to={'/checklist/' + this.props.checklist.id + '/' + this.state.goTaskScreenKey} />;
+            return <Redirect to={'/checklist/' + this.props.checklist.id + '/new'} />;
         }
         const checklist = this.props.checklist ? this.props.checklist : null;
         const tasks = this.props.checklist ? checklist.tasks : [];
