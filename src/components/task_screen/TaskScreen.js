@@ -32,17 +32,12 @@ class TaskScreen extends Component {
     goListScreen = () => { this.setState({goList : true}); }
 
     handlePropertyChange = (e, property) => {
-        // debugger;
-        if (this.props.match.params.key === 'new') {
-            const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
-            this.newTask[property] = propertyVal
-        }
+        let key = this.props.match.params.key;
+        const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
+        if (key === 'new') this.newTask[property] = propertyVal;
         else {
-            const propertyVal = (property === this.taskProperties.TASK_COMPLETED ? e.target.checked : e.target.value);
             const checklist = this.props.checklist ? this.props.checklist[0] : null;
-            if (checklist) {
-                checklist.tasks[checklist.tasks.length - 1][property] = propertyVal
-            }
+            if (checklist && key) checklist.tasks[this.props.match.params.key][property] = propertyVal
         }
     }
 

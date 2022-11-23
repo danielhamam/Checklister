@@ -15,11 +15,13 @@ class ListScreen extends Component {
         // owner: '',
         NavigateHome: false, 
         rerender : false,
+        propertyValWasChanged : false // keeps track if we made changes to name/owner
     }
 
     handleListChange = (event, property) => {
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
         let propertyVal = event.target.value;
+        console.log('ListScreen.handleListChange.propertyVal:')
         checklist[property] = propertyVal;
     }
 
@@ -51,21 +53,23 @@ class ListScreen extends Component {
    }
 
    componentWillUnmount = () => {
-    console.log('ListScreen.componentWillUnmount : saving checklist name / owner');
-    const fireStore = getFirestore();
-    const checklist = this.props.checklist ? this.props.checklist[0] : null;
-    if (checklist) fireStore.collection('accounts').doc(this.props.auth.uid)
-                    .collection('checklists').doc(checklist.id).update({ 
-                        'name' : checklist.name,
-                        'owner' : checklist.owner
-                    });
-   }
+        console.log('ListScreen.componentWillUnmount : saving checklist name / owner');
+        const fireStore = getFirestore();
+        const checklist = this.props.checklist ? this.props.checklist[0] : null;
+        if (checklist && this.state.propertyValWasChanged) {
+            fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).update({ 
+                'name' : checklist.name,
+                'owner' : checklist.owner
+            });
+        }
+    }
 
     render() {
         const auth = this.props.auth;
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
 
-        // console.log('---------------PROPS:', this.props);
+        console.log('---------------LISTSCREEN.PROPS: ', this.props);
+        console.log('---------------LISTSCREEN.CHECKLIST: ', this.props.checklist);
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
