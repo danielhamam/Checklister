@@ -28,7 +28,7 @@ class HomeScreen extends Component {
         });
     }
     
-    updateList = (event) => {
+    moveListToTop = (event) => {
         // Update the created_time so it can be on top
         const fireStore = getFirestore();
         let baseURI = event.target.baseURI;
@@ -52,7 +52,7 @@ class HomeScreen extends Component {
                     <div className="row row-margin">
                         <div className="col s5">
                             <div id="your_lists">Your Lists</div> 
-                            <div onClick={this.updateList}>
+                            <div onClick={this.moveListToTop}>
                                 <div className="todo-lists section">
                                     {this.props.checklists && this.props.checklists.map(checklist => (
                                         <Link to={'/checklist/' + checklist.id} key={checklist.id} >
@@ -97,6 +97,7 @@ export default compose(
             subcollections: [
                 {
                     collection : 'checklists', 
+                    orderBy: ["created_time", "desc"] 
                 }
             ],
             storeAs: 'checklists' // abstracts data in redux store

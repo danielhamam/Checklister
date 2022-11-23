@@ -15,13 +15,14 @@ class ListScreen extends Component {
         // owner: '',
         NavigateHome: false, 
         rerender : false,
-        propertyValWasChanged : false // keeps track if we made changes to name/owner
+        // propertyValWasChanged : false // keeps track if we made changes to name/owner
     }
 
     handleListChange = (event, property) => {
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
         let propertyVal = event.target.value;
-        console.log('ListScreen.handleListChange.propertyVal:')
+        console.log('ListScreen.handleListChange.propertyVal: ', propertyVal)
+        // this.setState({propertyValWasChanged : true})
         checklist[property] = propertyVal;
     }
 
@@ -53,10 +54,10 @@ class ListScreen extends Component {
    }
 
    componentWillUnmount = () => {
-        console.log('ListScreen.componentWillUnmount : saving checklist name / owner');
         const fireStore = getFirestore();
         const checklist = this.props.checklist ? this.props.checklist[0] : null;
-        if (checklist && this.state.propertyValWasChanged) {
+        console.log('ListScreen.componentWillUnmount : saving checklist name / owner. Name = ' + checklist.name + " and Owner = " + checklist.owner);
+        if (checklist) {
             fireStore.collection('accounts').doc(this.props.auth.uid).collection('checklists').doc(checklist.id).update({ 
                 'name' : checklist.name,
                 'owner' : checklist.owner
@@ -84,11 +85,11 @@ class ListScreen extends Component {
                     <div className="test_class">    Test-Class  </div>
                     <div className="input-field">
                         <label className="active" htmlFor="email">Name:</label>
-                        <input className="active" type="text" name="name" id="name" onChange={(e) => this.handleListChange(e, 'name')} defaultValue={checklist ? checklist.name : ''} />
+                        <input className="active" type="text" name="name" id="name" onChange={(e) => this.handleListChange(e, 'name')} key={checklist ? checklist.name : ''} defaultValue={checklist ? checklist.name : ''} />
                     </div>
                     <div className="input-field">
                         <label className="active" htmlFor="password">Owner:</label>
-                        <input className="active" type="text" name="owner" id="owner" onChange={(e) => this.handleListChange(e, 'owner')} defaultValue={checklist ? checklist.owner : ''} />
+                        <input className="active" type="text" name="owner" id="owner" onChange={(e) => this.handleListChange(e, 'owner')} key={checklist ? checklist.name : ''} defaultValue={checklist ? checklist.owner : ''} />
                     </div>
 
                     <div id="my_modal" className="modal">
